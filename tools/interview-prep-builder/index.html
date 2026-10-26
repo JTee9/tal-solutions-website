@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B3D2E">
+<meta name="description" content="Free Interview Prep Packet Builder by Tal Solutions K.K. Add your CV, the job description and your concerns, and get an AI prompt that builds a full interview preparation packet.">
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Interview Prep Packet Builder | Tal Solutions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Hanken+Grotesk:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&family=Playfair+Display:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: Tal Solutions site theme. Sticky header with T monogram, framed hero band, form column of sections on the left, sticky prompt and hiring-plan check on the right. Single light look, same as the website. */
+:root{
+  --bg:#F8F6F1; --bg-alt:#EFEADD; --surface:#FFFDF8; --fg:#13291F; --muted:#4A5E55;
+  --heading:#0B3D2E; --gold-text:#85601A; --gold:#B8903F; --line:rgba(11,61,46,.16);
+  --btn-bg:#0B3D2E; --btn-fg:#F8F6F1; --btn-hover:#14543F;
+  --hero-bg:#E9E2CF; --gold-line:rgba(133,96,26,.55); --tint:rgba(184,144,63,.2);
+  --error:#9B2C2C; --ok:#1E6B45; --ok-bg:rgba(30,107,69,.12);
+  --logo-header:54px; --logo-hero:84px; --logo-letter:.9;
+  --gold-grad:linear-gradient(90deg,#C4943A,#E2C163 50%,#C4943A);
+  --f-display:"Playfair Display","Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  --f-wordmark:"Cinzel","Playfair Display",serif;
+  --f-body:"Hanken Grotesk","Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 var(--f-body);margin:0;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+h1,h2,h3{font-family:var(--f-display);color:var(--heading);font-weight:600;line-height:1.25;margin:0;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1240px;margin-inline:auto}
+.bleed{margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-text)}
+
+/* header */
+.site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--bg);border-bottom:1px solid var(--line);
+  margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.bar{display:flex;align-items:center;gap:20px;min-height:84px;flex-wrap:wrap;padding-block:8px}
+a.brand{text-decoration:none}
+.brand{display:flex;align-items:center;gap:14px;color:var(--heading);min-width:0}
+.mono{display:grid;place-items:center;width:var(--logo-header);height:var(--logo-header);flex:none;border:1.5px solid var(--gold);font-family:var(--f-display);font-weight:600;font-size:calc(var(--logo-header)*var(--logo-letter));line-height:1;color:var(--heading);padding-bottom:.04em}
+.brand-text{display:flex;flex-direction:column;gap:3px;min-width:0}
+.wordmark{font-family:var(--f-wordmark);font-weight:600;letter-spacing:.24em;font-size:1rem;line-height:1;white-space:nowrap}
+.tagline{font-family:var(--f-wordmark);font-weight:500;letter-spacing:.26em;font-size:.56rem;line-height:1;color:var(--gold-text);white-space:nowrap}
+.bar .spacer{flex:1}
+@media (max-width:420px){:root{--logo-header:44px}.wordmark{letter-spacing:.14em;font-size:.86rem}.tagline{letter-spacing:.14em}}
+
+/* buttons */
+.btn{display:inline-block;font:inherit;font-size:.9rem;font-weight:600;letter-spacing:.06em;padding:12px 24px;border:1px solid var(--btn-bg);background:var(--btn-bg);color:var(--btn-fg);cursor:pointer;transition:background .2s,border-color .2s,color .2s;border-radius:0}
+.btn:hover{background:var(--btn-hover);border-color:var(--btn-hover)}
+.btn.ghost{background:transparent;color:var(--heading);border-color:var(--gold)}
+.btn.ghost:hover{background:var(--gold);color:var(--btn-fg)}
+a.btn{text-decoration:none}
+a[data-home]:not([href]){cursor:default}
+.btn.small{padding:7px 14px;font-size:.82rem}
+
+/* hero */
+.hero{background:var(--hero-bg);padding-block:clamp(36px,6vw,64px);margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.frame{position:relative;border-left:1px solid var(--gold-line);border-bottom:1px solid var(--gold-line);padding:clamp(36px,5vw,60px) clamp(18px,4vw,56px) clamp(28px,4vw,44px)}
+.frame::before{content:"";position:absolute;top:0;left:0;right:150px;border-top:1px solid var(--gold-line)}
+.frame::after{content:"";position:absolute;right:0;top:78px;bottom:0;border-right:1px solid var(--gold-line)}
+.frame .mono{position:absolute;top:-28px;right:40px;width:var(--logo-hero);height:var(--logo-hero);font-size:calc(var(--logo-hero)*var(--logo-letter));background:var(--hero-bg);border-color:var(--gold-text)}
+@media (max-width:640px){.frame::before{right:112px}.frame::after{top:56px}.frame .mono{width:calc(var(--logo-hero)*.7);height:calc(var(--logo-hero)*.7);font-size:calc(var(--logo-hero)*.7*var(--logo-letter));top:-20px;right:28px}}
+.hero-copy{display:flex;flex-direction:column;gap:18px;align-items:flex-start;max-width:760px}
+h1{font-size:clamp(2rem,4.6vw,3.2rem);letter-spacing:-.01em}
+.lead{font-size:1.06rem;color:var(--muted);max-width:62ch}
+.example{display:flex;gap:12px;align-items:center;flex-wrap:wrap;border:1px solid var(--gold);background:var(--tint);padding:8px 8px 8px 14px;font-size:.9rem}
+
+/* layout */
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,480px);gap:clamp(24px,3vw,40px);margin-top:36px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:minmax(0,1fr)}}
+.sec{background:var(--surface);border:1px solid var(--line);margin-bottom:14px}
+.sec>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;padding:18px 20px}
+.sec>summary::-webkit-details-marker{display:none}
+.num{flex:none;width:34px;text-align:center;font:600 1.7rem/1 var(--f-display);color:var(--gold-text)}
+.sec.done .num{font:700 1.3rem/1 var(--f-body);color:var(--ok)}
+.sec h2{font-size:1.2rem;flex:1;min-width:0}
+.sec h2 small{display:block;font:400 .86rem/1.4 var(--f-body);color:var(--muted);margin-top:3px}
+.chev{color:var(--gold-text);transition:transform .15s}
+.sec[open] .chev{transform:rotate(90deg)}
+.sec[open]>summary{border-bottom:1px solid var(--line)}
+.body{padding:20px;display:grid;gap:18px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.f{min-width:0;display:grid;gap:6px;align-content:start}
+label,.lab{font-weight:600;font-size:.9rem;color:var(--heading);letter-spacing:.02em}
+.hint{font-size:.82rem;color:var(--muted);line-height:1.5}
+.opt{font-weight:400;color:var(--muted);font-size:.78rem;margin-left:6px}
+input[type=text],input[type=number],select,textarea{width:100%;font:inherit;font-size:.95rem;line-height:1.5;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:0;padding:10px 12px}
+textarea{resize:vertical;min-height:88px}
+#skills{min-height:150px}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:0}
+.seg{display:flex;flex-wrap:wrap;gap:10px}
+.seg input,.tone input{position:absolute;opacity:0;pointer-events:none}
+.seg label{font-weight:500;font-size:.9rem;color:var(--fg);letter-spacing:0;border:1px solid var(--line);background:var(--bg);padding:9px 15px;cursor:pointer}
+.seg input:checked+label{border-color:var(--gold);background:var(--tint);color:var(--heading)}
+.seg input:focus-visible+label,.tone input:focus-visible+label{outline:2px solid var(--gold);outline-offset:2px}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400;color:var(--fg);letter-spacing:0}
+.check input{margin-top:.5em;accent-color:var(--gold)}
+.tone{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tone label{display:block;border:1px solid var(--line);padding:14px 16px;cursor:pointer;background:var(--bg);font-weight:400;letter-spacing:0}
+.tone label b{display:block;font:600 1.05rem var(--f-display);color:var(--heading);margin-bottom:3px}
+.tone label span{font-size:.85rem;color:var(--muted);line-height:1.5;display:block}
+.tone input:checked+label{border-color:var(--gold);background:var(--tint)}
+@media (max-width:480px){.tone{grid-template-columns:1fr}}
+.callout{border-left:2px solid var(--gold);background:var(--bg-alt);padding:12px 14px;font-size:.9rem;color:var(--muted)}
+.callout b{color:var(--heading)}
+.divider{border:0;border-top:1px solid var(--line);margin:2px 0;width:100%}
+
+/* output column */
+aside.out{position:sticky;top:calc(98px + env(safe-area-inset-top,0px));display:grid;gap:14px;min-width:0}
+@media (max-width:980px){aside.out{position:static}}
+.panel{background:var(--surface);border:1px solid var(--line);padding:18px 20px;min-width:0}
+.panel h3{font-size:1.15rem;display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:6px}
+.pill{font:600 .72rem var(--f-mono);letter-spacing:.04em;padding:3px 9px;border:1px solid var(--gold);color:var(--gold-text);background:var(--surface)}
+.rule{width:56px;height:2px;background:var(--gold-grad);border:0;margin:10px 0 0}
+.checks{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;max-height:300px;overflow:auto}
+.checks li{display:flex;gap:10px;font-size:.86rem;line-height:1.5;padding:9px 11px;background:var(--tint);color:var(--fg)}
+.checks li.good{background:var(--ok-bg)}
+.checks li i{font-style:normal;font-weight:700;flex:none;color:var(--gold-text)}
+.checks li.good i{color:var(--ok)}
+#prompt{font:12.5px/1.55 var(--f-mono);height:min(50vh,440px);margin-top:12px;background:var(--bg)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.status{font-size:.86rem;color:var(--ok)}
+.next{font-size:.86rem;color:var(--muted);margin-top:12px}
+
+/* footer */
+.site-footer{background:var(--hero-bg);margin-top:48px;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:36px max(16px,env(safe-area-inset-left,0px)) calc(28px)}
+.foot{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:center;justify-content:space-between}
+.foot p{font-size:.86rem;color:var(--muted);max-width:56ch}
+.legal{margin-top:24px;padding-top:16px;border-top:1px solid var(--gold-line);font-size:.8rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* CV builder additions */
+.job{border:1px solid var(--line);background:var(--bg);margin-bottom:12px}
+.job>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px 14px}
+.job>summary::-webkit-details-marker{display:none}
+.jn{font:600 1.35rem/1 var(--f-display);color:var(--gold-text);width:26px;flex:none}
+.jt{flex:1;min-width:0;font-weight:600;color:var(--heading);overflow-wrap:anywhere}
+.rm{font:inherit;font-size:.78rem;font-weight:600;border:1px solid var(--line);background:transparent;color:var(--muted);padding:4px 10px;cursor:pointer;border-radius:0}
+.rm:hover{border-color:var(--error);color:var(--error)}
+.jbody{padding:18px 14px 20px;display:grid;gap:16px;border-top:1px solid var(--line);background:var(--surface)}
+.jdblock{border:1px solid var(--line);background:var(--bg);padding:14px;display:grid;gap:12px;margin-bottom:12px}
+.jd-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.check.small{font-size:.82rem;margin-top:4px}
+input[type=file]{font:inherit;font-size:.88rem;color:var(--muted);max-width:100%}
+input:disabled{opacity:.5}
+.jdtext{min-height:140px}
+.hint.jdmsg{min-height:1em}
+
+/* shared additions for upload tools */
+.up{display:grid;gap:6px;border:1px dashed var(--gold);background:var(--bg);padding:12px 14px}
+.up .lab{font-size:.88rem}
+.chk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px 18px}
+.chk-grid label.check{font-size:.92rem;margin:0}
+#cvText,#bg,#jdText{min-height:180px}
+.disc{margin-top:36px;border:1px solid var(--line);border-left:3px solid var(--gold);background:var(--surface);padding:20px 22px;display:grid;gap:12px}.disc h2{font-size:1.1rem}.disc p{font-size:.86rem;color:var(--muted);line-height:1.7}.short-disc{font-size:.84rem;color:var(--fg);background:var(--tint);padding:9px 12px;margin-top:12px;line-height:1.55}.short-disc a{color:var(--heading)}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" data-home aria-label="Tal Solutions home">
+      <span class="mono" aria-hidden="true">T</span>
+      <span class="brand-text"><span class="wordmark">TAL SOLUTIONS K.K.</span><span class="tagline">TECHNOLOGY RECRUITMENT</span></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="btn ghost small" data-home>&larr; Home</a>
+    <a class="btn ghost small" href="../../index.html#tools">All free tools</a>
+    <button class="btn small" id="copyTop" type="button">Copy prompt</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap"><div class="frame"><span class="mono" aria-hidden="true">T</span>
+    <div class="hero-copy">
+      <p class="eyebrow">Free career tool</p>
+      <h1>Interview Prep Packet Builder</h1>
+      <p class="lead">Add your CV, the job description and what is on your mind. The prompt you get at the end asks an AI assistant to research the company and build your packet: a company briefing, your strengths, the gaps to close, how the process may run, how to sell yourself, questions to ask, and free resources to study.</p>
+      <div class="example" id="exampleBar"><span>Example answers are filled in so you can see how it works.</span><button class="btn small ghost" id="clearAll" type="button">Clear and start my own</button></div>
+    </div>
+  </div></div>
+</section>
+
+<div class="wrap">
+<div class="grid">
+<form id="form" autocomplete="off" onsubmit="return false">
+<details class="sec" open data-sec="bg"><summary><span class="num">1</span><h2>Your background<small>Your CV or a description of your experience</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+
+  <div class="row">
+    <div class="f"><label for="name">Your name<span class="opt">optional</span></label><input type="text" id="name"></div>
+    <div class="f"><label for="curRole">Current or last role</label><input type="text" id="curRole"></div>
+  </div>
+  <div class="f"><label for="bg">Your CV or experience</label><textarea id="bg" placeholder="Paste your CV here, upload it below, or type out your experience in your own words."></textarea></div>
+  <div class="up"><label class="lab" for="bgFile">Or upload your CV</label><input type="file" id="bgFile" data-target="bg" data-msg="bgMsg" accept=".pdf,.docx,.txt,.md,.html,.htm"><p class="hint" id="bgMsg" aria-live="polite">PDF, Word (.docx) or text. The file is read in your browser and never uploaded anywhere. Uploaded text is added to the box above so you can check and edit it.</p></div>
+
+</div></details>
+<details class="sec" open data-sec="role"><summary><span class="num">2</span><h2>The company and the role<small>What you are applying for</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+
+  <div class="row">
+    <div class="f"><label for="company">Company name</label><input type="text" id="company"></div>
+    <div class="f"><label for="roleTitle">Role title</label><input type="text" id="roleTitle"></div>
+    <div class="f"><label for="loc">Location and work style<span class="opt">optional</span></label><input type="text" id="loc" placeholder="e.g. Tokyo, hybrid"></div>
+  </div>
+  <div class="row">
+    <div class="f"><label for="site">Company website or careers page<span class="opt">optional</span></label><input type="text" id="site"></div>
+    <div class="f"><label for="dept">Team or department<span class="opt">optional</span></label><input type="text" id="dept"></div>
+  </div>
+  <div class="f"><label for="jdText">Job description</label><textarea id="jdText" placeholder="Paste the job description here, or upload it below."></textarea></div>
+  <div class="up"><label class="lab" for="jdFile">Or upload the job description</label><input type="file" id="jdFile" data-target="jdText" data-msg="jdMsg" accept=".pdf,.docx,.txt,.md,.html,.htm"><p class="hint" id="jdMsg" aria-live="polite">PDF, Word (.docx) or text. The file is read in your browser and never uploaded anywhere. Uploaded text is added to the box above so you can check and edit it.</p></div>
+  <div class="f"><label for="known">What you already know about the company or role<span class="opt">optional</span></label><textarea id="known" placeholder="What a recruiter told you, things you have read, why it caught your eye."></textarea></div>
+
+</div></details>
+<details class="sec" data-sec="interview"><summary><span class="num">3</span><h2>The interview<small>Stage, format and who you will meet</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+
+  <div class="row">
+    <div class="f"><label for="stage">Where are you in the process?</label><select id="stage"><option value="">Not decided</option><option>Not yet applied</option><option>Applied, waiting to hear</option><option>Recruiter or HR screening</option><option>First interview</option><option>Technical test or case</option><option>Later or final interview</option><option>Offer stage</option></select></div>
+    <div class="f"><label for="when">Interview date<span class="opt">optional</span></label><input type="text" id="when" placeholder="e.g. 5 Nov"></div>
+    <div class="f"><label for="fmt">Format</label><select id="fmt"><option value="">Do not know</option><option>Video call</option><option>In person</option><option>Phone</option><option>Written test or take-home task</option><option>Mixed</option></select></div>
+  </div>
+  <div class="row">
+    <div class="f"><label for="ilang">Interview language</label><select id="ilang"><option value="">Do not know</option><option>English</option><option>Japanese</option><option>Both English and Japanese</option></select></div>
+    <div class="f"><label for="time">Time you have to prepare</label><select id="time"><option>2 to 3 days</option><option>1 day or less</option><option>1 week</option><option>2 weeks or more</option></select></div>
+  </div>
+  <div class="f"><span class="lab">Who will you meet?</span><div class="chk-grid"><label class="check"><input type="checkbox" name="who" value="HR or recruiter"><span>HR or recruiter</span></label>
+<label class="check"><input type="checkbox" name="who" value="Hiring manager"><span>Hiring manager</span></label>
+<label class="check"><input type="checkbox" name="who" value="Future teammates"><span>Future teammates</span></label>
+<label class="check"><input type="checkbox" name="who" value="Senior leader or executive"><span>Senior leader or executive</span></label>
+<label class="check"><input type="checkbox" name="who" value="A panel"><span>A panel</span></label>
+<label class="check"><input type="checkbox" name="who" value="I do not know yet"><span>I do not know yet</span></label></div></div>
+  <div class="f"><label for="told">What you have been told about the process<span class="opt">optional</span></label><textarea id="told" placeholder="Number of rounds, names or titles of interviewers, topics mentioned."></textarea></div>
+
+</div></details>
+<details class="sec" data-sec="concerns"><summary><span class="num">4</span><h2>Your concerns and requests<small>Anything you want the packet to address</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+
+  <div class="f"><label for="concerns">What are you worried about?</label><textarea id="concerns" placeholder="e.g. I have never managed people. My Japanese is weaker in technical topics. I do not know their industry."></textarea></div>
+  <div class="f"><label for="clarify">What do you want clarified before the interview?</label><textarea id="clarify" placeholder="Things about the role, team, process or company you are unsure about."></textarea></div>
+  <div class="f"><label for="emph">What do you most want them to know about you?</label><textarea id="emph"></textarea></div>
+  <div class="f"><label for="req">Special requests for the prep material<span class="opt">optional</span></label><textarea id="req" placeholder="e.g. Practice questions, a one-page summary I can read on the train, advice on salary discussion."></textarea></div>
+
+</div></details>
+<details class="sec" open data-sec="packet"><summary><span class="num">5</span><h2>Your packet<small>What to include</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+
+  <div class="f"><span class="lab">Sections</span><div class="chk-grid">
+    <label class="check"><input type="checkbox" id="pCo" checked><span>Company briefing</span></label>
+    <label class="check"><input type="checkbox" id="pProc" checked><span>What the interview process may look like</span></label>
+    <label class="check"><input type="checkbox" id="pStr" checked><span>My strengths for this role</span></label>
+    <label class="check"><input type="checkbox" id="pGap" checked><span>Gaps and how to close them</span></label>
+    <label class="check"><input type="checkbox" id="pSell" checked><span>How to sell myself, with stories</span></label>
+    <label class="check"><input type="checkbox" id="pExp" checked><span>Questions I am likely to be asked</span></label>
+    <label class="check"><input type="checkbox" id="pAsk" checked><span>Questions I should ask them</span></label>
+    <label class="check"><input type="checkbox" id="pRes" checked><span>Resources to study</span></label>
+    <label class="check"><input type="checkbox" id="pPlan" checked><span>A prep schedule and day-before checklist</span></label>
+  </div></div>
+  <div class="row">
+    <div class="f"><label for="depth">Depth</label><select id="depth"><option>Thorough</option><option>Quick overview</option></select></div>
+    <div class="f"><label for="budget">Resources</label><select id="budget"><option value="free">Free resources only</option><option value="free-first">Free first, a few books as optional extras</option></select></div>
+    <div class="f"><label for="lang">Language of the packet</label><select id="lang"><option>English</option><option>Japanese</option></select></div>
+  </div>
+
+</div></details>
+
+</form>
+
+<aside class="out">
+  <div class="panel">
+    <h3>Packet readiness <span class="pill" id="prog">0 of 0</span></h3>
+    <p class="hint">Updates as you type. These are suggestions, not errors.</p>
+    <ul class="checks" id="checks"></ul>
+  </div>
+  <div class="panel">
+    <h3>Your prompt</h3>
+    <p class="hint">Copy this into any AI assistant (ChatGPT, Claude, Gemini and others). Use one that can search the web if you can.</p>
+    <textarea id="prompt" readonly aria-label="Generated prompt"></textarea>
+    <div class="actions"><button class="btn" id="copy" type="button">Copy prompt</button><span class="status" id="status" role="status"></span></div>
+    <p class="short-disc"><b>Use this as support, not as the final product.</b> AI output can contain mistakes. Review and verify everything before you use or submit it. <a href="#disclaimer">Read the full disclaimer</a>.</p>
+    <p class="next">Check every fact the AI gives you about the company against its own website before you rely on it.</p>
+  </div>
+</aside>
+</div>
+</div>
+<div class="wrap"><div class="disc" id="disclaimer"><h2>Disclaimer</h2><p>This tool is provided free of charge for general information and support only. It generates a text prompt for you to use with a third-party AI service of your choice. Tal Solutions K.K. does not operate, control or endorse those services and is not responsible for what they produce. AI output can be inaccurate, incomplete or out of date, and may not suit your situation. Tal Solutions K.K. makes no guarantee about the accuracy, completeness or suitability of anything these tools or any AI service produce, including any job description, CV, resume, career plan or interview material, and does not guarantee any interview, job offer, hire or other outcome. You are responsible for reviewing, correcting and verifying everything before you use or submit it, and for the decisions you make. These tools are meant to support your own goals, not to replace your judgment. They do not provide legal, employment, financial or career advice. Please do not enter sensitive personal information such as My Number, passport or bank details. To the fullest extent permitted by law, Tal Solutions K.K. is not liable for any loss or damage arising from use of these tools or reliance on their output. Your use of any AI service is subject to that service's own terms and privacy policy.</p><p lang="ja">本ツールは、一般的な情報提供および作業支援を目的として無料で提供しています。本ツールが作成するのは、お客様が任意に選ぶ外部のAIサービスで使用するためのプロンプト(指示文)です。株式会社Tal Solutions(以下「当社」)は、これらの外部サービスを運営・管理・推奨しておらず、その出力内容について責任を負いません。AIの出力には、誤り、漏れ、情報の古さが含まれる場合があり、お客様の状況に適さない場合があります。当社は、本ツールまたはAIサービスが生成する求人票、CV、履歴書、職務経歴書、キャリアプラン、面接対策資料などの内容の正確性、完全性、適合性を保証せず、面接の通過、内定、採用その他の結果も保証しません。ご利用・ご提出の前に、内容を必ずご自身で確認・修正・検証してください。最終的な判断と責任はお客様ご自身が負うものとします。本ツールはお客様ご自身の目標を支援するためのものであり、お客様の判断に代わるものではありません。また、法律、雇用、財務、キャリアに関する助言を提供するものでもありません。マイナンバー、パスポート番号、口座情報などの機微な個人情報は入力しないでください。当社は、法令で認められる最大限の範囲で、本ツールの利用または出力内容への依存により生じた損害について責任を負いません。外部AIサービスのご利用には、各サービスの利用規約およびプライバシーポリシーが適用されます。</p></div></div>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot">
+      <a class="brand" data-home aria-label="Tal Solutions home"><span class="mono" aria-hidden="true">T</span><span class="brand-text"><span class="wordmark">TAL SOLUTIONS K.K.</span><span class="tagline">TECHNOLOGY RECRUITMENT</span></span></a>
+      <p>Bilingual technology recruitment for financial services, fintech and technology companies in Japan. This tool is free to use. Files are read in your browser and nothing you enter leaves this page until you paste the prompt into an AI service yourself.</p>
+    </div>
+    <p class="legal">&copy; Tal Solutions K.K. 株式会社Tal Solutions &middot; <a href="#disclaimer">Disclaimer</a> &middot; <a href="../../index.html#privacy">Privacy Policy</a></p>
+  </div>
+</footer>
+<script>
+(function(){
+
+/* HOME LINK: put your homepage address between the quotes, e.g. "/" or "https://yourdomain.com/". While empty, the logo and Home button do nothing. */
+var HOME_URL="../../index.html";
+document.querySelectorAll('a[data-home]').forEach(function(a){if(HOME_URL)a.setAttribute('href',HOME_URL)});
+var $=function(id){return document.getElementById(id)};
+var v=function(id){var e=$(id);return e?(e.value||'').trim():''};
+var radio=function(n){var e=document.querySelector('input[name="'+n+'"]:checked');return e?e.value:''};
+var lines=function(s){return s.split(/\n+/).map(function(x){return x.replace(/^[\s\-•*]+/,'').trim()}).filter(Boolean)};
+var bullets=function(s){return lines(s).map(function(x){return '  - '+x}).join('\n')};
+var picked=function(name){return Array.prototype.map.call(document.querySelectorAll('input[name="'+name+'"]:checked'),function(e){return e.value})};
+
+function extractText(f,done,fail){
+  var n=f.name.toLowerCase(),r=new FileReader();
+  if(f.size>8000000)return fail('That file is too large. Paste the text instead.');
+  if(/\.(txt|md|html?)$/.test(n)){
+    r.onload=function(){var t=String(r.result||'');
+      if(/\.html?$/.test(n)){var d=document.createElement('div');d.innerHTML=t.replace(/<(script|style)[\s\S]*?<\/\1>/gi,'');t=d.textContent||''}
+      done(t)};
+    r.onerror=function(){fail('Could not read that file. Paste the text instead.')};r.readAsText(f);return;
+  }
+  if(/\.docx$/.test(n)){
+    if(!window.mammoth)return fail('Word reading is not available right now. Paste the text instead.');
+    r.onload=function(){window.mammoth.extractRawText({arrayBuffer:r.result}).then(function(x){done(x.value)},function(){fail('Could not read that Word file. Paste the text instead.')})};
+    r.onerror=function(){fail('Could not read that file. Paste the text instead.')};r.readAsArrayBuffer(f);return;
+  }
+  if(/\.pdf$/.test(n)){
+    if(!window.pdfjsLib)return fail('PDF reading is not available right now. Paste the text instead.');
+    try{window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'}catch(e){}
+    r.onload=function(){
+      window.pdfjsLib.getDocument({data:new Uint8Array(r.result)}).promise.then(function(pdf){
+        var parts=[];
+        var page=function(i){
+          if(i>pdf.numPages)return Promise.resolve();
+          return pdf.getPage(i).then(function(pg){return pg.getTextContent()}).then(function(tc){
+            var s='';tc.items.forEach(function(it){s+=it.str+(it.hasEOL?'\n':' ')});parts.push(s);return page(i+1)});
+        };
+        return page(1).then(function(){return parts.join('\n')});
+      }).then(done,function(){fail('Could not read that PDF. Paste the text instead.')});
+    };
+    r.onerror=function(){fail('Could not read that file. Paste the text instead.')};r.readAsArrayBuffer(f);return;
+  }
+  fail('This file type cannot be read here. Use PDF, Word (.docx), or a text file, or paste the text.');
+}
+document.addEventListener('change',function(ev){
+  var t=ev.target;
+  if(!(t&&t.type==='file'&&t.dataset&&t.dataset.target&&t.files&&t.files[0]))return;
+  var ta=$(t.dataset.target),msg=$(t.dataset.msg),f=t.files[0];
+  msg.textContent='Reading '+f.name+'...';
+  extractText(f,function(txt){
+    txt=String(txt||'').replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+    if(!txt){msg.textContent='No readable text found (a scanned file?). Paste the text instead.';t.value='';return}
+    ta.value=(ta.value?ta.value+'\n\n':'')+txt;msg.textContent='Loaded '+f.name+'. Check the text below and fix anything that looks off.';t.value='';update();
+  },function(m){msg.textContent=m;t.value=''});
+});
+function updateSections(SECS){
+  var n=0;
+  document.querySelectorAll('details.sec').forEach(function(d){
+    var ok=!!SECS[d.dataset.sec]();var nm=d.querySelector('.num');
+    d.classList.toggle('done',ok);if(!nm.dataset.i)nm.dataset.i=nm.textContent;
+    nm.textContent=ok?'✓':nm.dataset.i;if(ok)n++;
+  });
+  $('prog').textContent=n+' of '+document.querySelectorAll('details.sec').length;
+}
+function renderChecks(cl){
+  var ul=$('checks');ul.innerHTML='';
+  if(!cl.length)cl=[{ok:true,t:'Start filling in sections and suggestions will appear here.'}];
+  cl.slice(0,12).forEach(function(c){var li=document.createElement('li');if(c.ok)li.className='good';
+    var i=document.createElement('i');i.textContent=c.ok?'✓':'!';var s=document.createElement('span');s.textContent=c.t;li.appendChild(i);li.appendChild(s);ul.appendChild(li)});
+}
+function sortChecks(out){return out.filter(function(o){return !o.ok}).concat(out.filter(function(o){return o.ok}))}
+function copy(){
+  var ta=$('prompt');var st=$('status');
+  var done=function(){st.textContent='Copied. Paste it into your AI assistant.';setTimeout(function(){st.textContent=''},3500)};
+  var fb=function(){ta.focus();ta.select();try{document.execCommand('copy');done()}catch(e){st.textContent='Press Ctrl/Cmd+C to copy the selected text.'}};
+  try{navigator.clipboard.writeText(ta.value).then(done,fb)}catch(e){fb()}
+}
+function fillForm(E){
+  Object.keys(E.text||{}).forEach(function(k){$(k).value=E.text[k]});
+  Object.keys(E.sel||{}).forEach(function(k){$(k).value=E.sel[k]});
+  Object.keys(E.checks||{}).forEach(function(k){$(k).checked=E.checks[k]});
+  Object.keys(E.names||{}).forEach(function(n){document.querySelectorAll('input[name="'+n+'"]').forEach(function(c){c.checked=E.names[n].indexOf(c.value)>-1})});
+}
+function clearForm(defaultChecks){
+  document.querySelectorAll('#form input[type=text],#form textarea').forEach(function(e){e.value=''});
+  document.querySelectorAll('#form select').forEach(function(s){s.selectedIndex=0});
+  document.querySelectorAll('#form input[type=checkbox]').forEach(function(c){c.checked=defaultChecks.indexOf(c.id)>-1||defaultChecks.indexOf(c.value)>-1});
+  $('exampleBar').hidden=true;
+}
+$('form').addEventListener('input',function(){update()});
+$('form').addEventListener('change',function(){update()});
+$('copy').addEventListener('click',copy);
+$('copyTop').addEventListener('click',copy);
+document.querySelectorAll('details.sec .num').forEach(function(n){n.dataset.i=n.textContent});
+
+var EX={text:{name:'',curRole:'Senior Cloud Engineer',
+ bg:'Senior Cloud Engineer, Example Bank Japan (2021 - present)\n- Led migration of 14 trading applications to AWS\n- Cut monthly infrastructure cost by about 22%\n- Built a deployment pipeline used by 5 teams; mentor 2 engineers\n\nSoftware Engineer, Example Fintech KK (2018 - 2021)\n- Built payment APIs in Python handling about 40,000 requests a day\n\nSkills: AWS, Terraform, Python, GitHub Actions. English native, Japanese business level.',
+ company:'Example Cloud Co',roleTitle:'Staff Cloud Engineer',loc:'Tokyo, hybrid',site:'',dept:'Platform Engineering',
+ jdText:'We are looking for a Staff Cloud Engineer to lead platform design for our trading technology group. You will define cloud standards, mentor engineers and work with security and risk teams. Requirements: 6+ years of infrastructure experience, strong AWS and Terraform skills, business-level Japanese and English, experience in a regulated environment, experience leading technical direction across teams. Preferred: Kubernetes, FinOps.',
+ known:'A recruiter said there are three interview rounds and the team is about 12 people.',when:'',
+ told:'Round 1 with the hiring manager, round 2 technical, round 3 with a senior leader.',
+ concerns:'I have not worked with Kubernetes in production. I have never set standards for a whole organisation.',
+ clarify:'How big is the group and who would I report to? Is this a new role or a replacement?',emph:'That I deliver migrations on time and can bridge Tokyo and overseas teams.',req:'Please include some practice questions on system design.'},
+ sel:{stage:'First interview',fmt:'Video call',ilang:'Both English and Japanese',time:'1 week',depth:'Thorough',budget:'free-first',lang:'English'},
+ checks:{pCo:true,pProc:true,pStr:true,pGap:true,pSell:true,pExp:true,pAsk:true,pRes:true,pPlan:true},
+ names:{who:['Hiring manager','Future teammates']}};
+
+function build(){
+ var P=[];
+ var co=v('company')||'the company';var role=v('roleTitle')||'this role';
+ P.push('You are an expert interview coach and researcher with deep knowledge of hiring in Japan and international markets. Build me a practical interview preparation packet for the role below. Be honest, specific and encouraging. I want to walk in feeling informed and confident, without exaggerating my experience.\n');
+ P.push('=== RULES ===\n'+
+ '1. Research. Search the web for current information on '+co+' (its website, careers page, press and news from the last 12 months, filings or reputable industry coverage). If you cannot browse, say so at the top and clearly separate general knowledge from what you could not verify.\n'+
+ '2. Label what you are unsure of with [VERIFY]. Never invent facts, numbers, interview questions that "they always ask", or URLs. Only give a link if you are confident it exists; otherwise tell me exactly what to search for.\n'+
+ '3. Name your sources (site name and URL where known) next to important claims. Treat employee reviews and forum posts (for example Glassdoor, OpenWork, Blind) as anecdotal and say so.\n'+
+ '4. Resources: '+(v('budget')==='free'?'recommend free resources only (articles, official docs, company pages, blogs, videos, public talks).':'put free resources first (articles, official docs, blogs, videos, public talks). Add books only as clearly optional extras, and mention that a library or ebook loan may be an option, so I do not feel pressure to spend money.')+' Explain in one line why each resource is worth my time.\n'+
+ '5. Only use my real experience below. When you suggest how I should talk about myself, build it from facts I gave. Do not coach me to claim skills I do not have.\n'+
+ '6. For gaps, be straight with me and show how to handle them honestly: what I can realistically learn or do in the time I have, and how to talk about the gap without bluffing.\n'+
+ '7. Keep it easy to digest: short sections, plain language, no jargon without explaining it.\n');
+
+ var r='=== THE ROLE ===\n';
+ r+='- Company: '+(v('company')||'(not given)')+'\n';
+ r+='- Role: '+(v('roleTitle')||'(not given)')+'\n';
+ if(v('dept'))r+='- Team: '+v('dept')+'\n';
+ if(v('loc'))r+='- Location and work style: '+v('loc')+'\n';
+ if(v('site'))r+='- Website: '+v('site')+'\n';
+ if(v('known'))r+='- What I already know: '+v('known')+'\n';
+ P.push(r);
+ P.push('=== JOB DESCRIPTION ===\n'+(v('jdText')||'(Not provided. Describe what a typical '+role+' role at a company like '+co+' involves, label it as typical, and ask me for the real JD.)')+'\n');
+ var b='=== ABOUT ME ===\n';
+ if(v('name'))b+='- Name: '+v('name')+'\n';
+ if(v('curRole'))b+='- Current or last role: '+v('curRole')+'\n';
+ b+='\n'+(v('bg')||'(No background provided. Ask me for my experience before writing the strengths and gaps sections.)')+'\n';
+ P.push(b);
+
+ var i='=== THE INTERVIEW ===\n';
+ if(v('stage'))i+='- Stage: '+v('stage')+'\n';
+ if(v('when'))i+='- Date: '+v('when')+'\n';
+ if(v('fmt'))i+='- Format: '+v('fmt')+'\n';
+ if(v('ilang'))i+='- Interview language: '+v('ilang')+'\n';
+ var w=picked('who');if(w.length)i+='- Who I will meet: '+w.join(', ')+'\n';
+ if(v('told'))i+='- What I was told about the process: '+v('told')+'\n';
+ i+='- Time to prepare: '+v('time')+'\n';
+ P.push(i);
+
+ var c='';
+ if(v('concerns'))c+='- My concerns: '+v('concerns')+'\n';
+ if(v('clarify'))c+='- Things I want clarified: '+v('clarify')+'\n';
+ if(v('emph'))c+='- What I most want them to know: '+v('emph')+'\n';
+ if(v('req'))c+='- Special requests: '+v('req')+'\n';
+ if(c)P.push('=== MY CONCERNS AND REQUESTS (address each one directly) ===\n'+c);
+
+ var o='=== WHAT TO PRODUCE (write in '+v('lang')+'; depth: '+v('depth').toLowerCase()+') ===\nStart with a 5-line "Read this first" summary: the role in plain words, my 3 strongest cards, my 2 biggest gaps, and the single most important thing to do before the interview.\n';
+ var k=1,L=function(t){o+=String.fromCharCode(64+k++)+'. '+t+'\n'};
+ if($('pCo').checked)L('COMPANY BRIEFING (easy to digest): what the company does in plain language; how it makes money; customers; products or services; size and locations; its position in the market and main competitors; recent news and direction from the last 12 months; culture and values as they present them; leadership if relevant; the challenges it likely faces; where this role and team fit and why the role probably exists. End with a 60-second spoken summary I can say aloud so I sound well informed.');
+ if($('pProc').checked)L('WHAT THE PROCESS MAY LOOK LIKE: what is publicly known about '+co+'\'s hiring process for roles like this (rounds, formats, typical topics, timeline), with sources and a note on how reliable each is. If nothing is public, describe the typical process for this kind of role and company, clearly labelled as typical. Tell me what each interviewer type (HR, hiring manager, team, senior leader) is usually trying to find out.');
+ if($('pStr').checked)L('MY STRENGTHS FOR THIS ROLE: match the JD requirements to my real experience, in a table (requirement, my evidence, how strong the match is). Highlight where I am a genuinely strong or unusual fit so I can feel confident.');
+ if($('pGap').checked)L('GAPS AND HOW TO CLOSE THEM: each place where the JD asks for something I have not clearly shown, ranked by how much it matters. For each: what I can do in '+v('time')+' (a small project, a tutorial, reading, a conversation), how to talk about it honestly, and a bridge from something I have done. Address each of my concerns above by name.');
+ if($('pSell').checked)L('HOW TO SELL MYSELF: a 60-second "tell me about yourself" built for this role; my 4 to 6 best stories in STAR form (situation, task, action, result) taken only from my background, each marked with the questions it answers; and the numbers I should have ready.');
+ if($('pExp').checked)L('QUESTIONS I AM LIKELY TO BE ASKED: 10 to 15, grouped by interviewer type and topic (behavioural, technical or role-specific, motivation, why this company, and the hard ones about my gaps or job changes), each with a short note on what a good answer covers and which of my stories to use.');
+ if($('pAsk').checked)L('QUESTIONS I SHOULD ASK THEM: grouped by who I am talking to (HR or recruiter, hiring manager, team members, senior leader), 4 to 6 each, with a line on why each question is smart. Include a polite way to ask the things I want clarified, and say who is best to ask. Mark any I should avoid asking in a first round.');
+ if($('pRes').checked)L('RESOURCES TO STUDY: websites, articles, blog posts, talks and videos, then optional books, grouped by topic (company, industry, role skills, interview technique, and each of my gaps). Say what to read first if I only have a little time.');
+ if($('pPlan').checked)L('PREP SCHEDULE AND CHECKLIST: a plan that fits '+v('time')+', then a day-before and day-of checklist (what to bring or set up, how to arrive or log in, a short warm-up, how to close the interview, and a thank-you note outline).');
+ o+='\nFinish with "ONE LAST THING": a short, encouraging note that reminds me what I do well.\n';
+ P.push(o);
+ return P.join('\n');
+}
+
+function checks(){
+ var out=[];var add=function(ok,t){out.push({ok:ok,t:t})};
+ if(v('bg').length<150)add(false,'Add your CV or a fuller description of your experience, so the packet can match you to the role.');else add(true,'Background added.');
+ if(!v('company')||!v('roleTitle'))add(false,'Add the company name and role title. The research depends on them.');
+ if(v('jdText').length<200)add(false,'Paste the job description. It is how the packet finds your gaps and strengths.');else add(true,'Job description added.');
+ if(!v('stage'))add(false,'Say which stage you are at. Preparation for a recruiter call and a final round are different.');
+ if(!picked('who').length)add(false,'Say who you will meet, if you know. The questions and stories change with the interviewer.');
+ if(!v('concerns'))add(false,'Write down what worries you, even small things. The packet answers each one directly.');
+ if(!v('emph'))add(false,'Say what you most want them to know about you. It shapes your pitch.');
+ if(!v('clarify'))add(false,'List anything you want clarified about the role or process. The packet will suggest how to ask.');
+ return sortChecks(out);
+}
+var SECS={
+ bg:function(){return v('bg').length>=150},
+ role:function(){return v('company')&&v('roleTitle')},
+ interview:function(){return v('stage')||picked('who').length||v('told')||v('fmt')},
+ concerns:function(){return v('concerns')||v('clarify')||v('emph')||v('req')},
+ packet:function(){return document.querySelector('#form input[type=checkbox][id^=p]:checked')}
+};
+function update(){updateSections(SECS);renderChecks(checks());$('prompt').value=build()}
+$('clearAll').addEventListener('click',function(){clearForm(['pCo','pProc','pStr','pGap','pSell','pExp','pAsk','pRes','pPlan']);update()});
+fillForm(EX);update();
+
+})();
+</script>
+</body>
+</html>

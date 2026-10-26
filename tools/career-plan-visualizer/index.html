@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B3D2E">
+<meta name="description" content="Free Career Plan Visualizer by Tal Solutions K.K. Describe your dream role and get an AI prompt that maps realistic career paths to reach it.">
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Career Plan Visualizer | Tal Solutions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Hanken+Grotesk:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&family=Playfair+Display:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: Tal Solutions site theme. Sticky header with T monogram, framed hero band, form column of sections on the left, sticky prompt and hiring-plan check on the right. Single light look, same as the website. */
+:root{
+  --bg:#F8F6F1; --bg-alt:#EFEADD; --surface:#FFFDF8; --fg:#13291F; --muted:#4A5E55;
+  --heading:#0B3D2E; --gold-text:#85601A; --gold:#B8903F; --line:rgba(11,61,46,.16);
+  --btn-bg:#0B3D2E; --btn-fg:#F8F6F1; --btn-hover:#14543F;
+  --hero-bg:#E9E2CF; --gold-line:rgba(133,96,26,.55); --tint:rgba(184,144,63,.2);
+  --error:#9B2C2C; --ok:#1E6B45; --ok-bg:rgba(30,107,69,.12);
+  --logo-header:54px; --logo-hero:84px; --logo-letter:.9;
+  --gold-grad:linear-gradient(90deg,#C4943A,#E2C163 50%,#C4943A);
+  --f-display:"Playfair Display","Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  --f-wordmark:"Cinzel","Playfair Display",serif;
+  --f-body:"Hanken Grotesk","Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 var(--f-body);margin:0;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+h1,h2,h3{font-family:var(--f-display);color:var(--heading);font-weight:600;line-height:1.25;margin:0;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1240px;margin-inline:auto}
+.bleed{margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-text)}
+
+/* header */
+.site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--bg);border-bottom:1px solid var(--line);
+  margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.bar{display:flex;align-items:center;gap:20px;min-height:84px;flex-wrap:wrap;padding-block:8px}
+a.brand{text-decoration:none}
+.brand{display:flex;align-items:center;gap:14px;color:var(--heading);min-width:0}
+.mono{display:grid;place-items:center;width:var(--logo-header);height:var(--logo-header);flex:none;border:1.5px solid var(--gold);font-family:var(--f-display);font-weight:600;font-size:calc(var(--logo-header)*var(--logo-letter));line-height:1;color:var(--heading);padding-bottom:.04em}
+.brand-text{display:flex;flex-direction:column;gap:3px;min-width:0}
+.wordmark{font-family:var(--f-wordmark);font-weight:600;letter-spacing:.24em;font-size:1rem;line-height:1;white-space:nowrap}
+.tagline{font-family:var(--f-wordmark);font-weight:500;letter-spacing:.26em;font-size:.56rem;line-height:1;color:var(--gold-text);white-space:nowrap}
+.bar .spacer{flex:1}
+@media (max-width:420px){:root{--logo-header:44px}.wordmark{letter-spacing:.14em;font-size:.86rem}.tagline{letter-spacing:.14em}}
+
+/* buttons */
+.btn{display:inline-block;font:inherit;font-size:.9rem;font-weight:600;letter-spacing:.06em;padding:12px 24px;border:1px solid var(--btn-bg);background:var(--btn-bg);color:var(--btn-fg);cursor:pointer;transition:background .2s,border-color .2s,color .2s;border-radius:0}
+.btn:hover{background:var(--btn-hover);border-color:var(--btn-hover)}
+.btn.ghost{background:transparent;color:var(--heading);border-color:var(--gold)}
+.btn.ghost:hover{background:var(--gold);color:var(--btn-fg)}
+a.btn{text-decoration:none}
+a[data-home]:not([href]){cursor:default}
+.btn.small{padding:7px 14px;font-size:.82rem}
+
+/* hero */
+.hero{background:var(--hero-bg);padding-block:clamp(36px,6vw,64px);margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.frame{position:relative;border-left:1px solid var(--gold-line);border-bottom:1px solid var(--gold-line);padding:clamp(36px,5vw,60px) clamp(18px,4vw,56px) clamp(28px,4vw,44px)}
+.frame::before{content:"";position:absolute;top:0;left:0;right:150px;border-top:1px solid var(--gold-line)}
+.frame::after{content:"";position:absolute;right:0;top:78px;bottom:0;border-right:1px solid var(--gold-line)}
+.frame .mono{position:absolute;top:-28px;right:40px;width:var(--logo-hero);height:var(--logo-hero);font-size:calc(var(--logo-hero)*var(--logo-letter));background:var(--hero-bg);border-color:var(--gold-text)}
+@media (max-width:640px){.frame::before{right:112px}.frame::after{top:56px}.frame .mono{width:calc(var(--logo-hero)*.7);height:calc(var(--logo-hero)*.7);font-size:calc(var(--logo-hero)*.7*var(--logo-letter));top:-20px;right:28px}}
+.hero-copy{display:flex;flex-direction:column;gap:18px;align-items:flex-start;max-width:760px}
+h1{font-size:clamp(2rem,4.6vw,3.2rem);letter-spacing:-.01em}
+.lead{font-size:1.06rem;color:var(--muted);max-width:62ch}
+.example{display:flex;gap:12px;align-items:center;flex-wrap:wrap;border:1px solid var(--gold);background:var(--tint);padding:8px 8px 8px 14px;font-size:.9rem}
+
+/* layout */
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,480px);gap:clamp(24px,3vw,40px);margin-top:36px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:minmax(0,1fr)}}
+.sec{background:var(--surface);border:1px solid var(--line);margin-bottom:14px}
+.sec>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;padding:18px 20px}
+.sec>summary::-webkit-details-marker{display:none}
+.num{flex:none;width:34px;text-align:center;font:600 1.7rem/1 var(--f-display);color:var(--gold-text)}
+.sec.done .num{font:700 1.3rem/1 var(--f-body);color:var(--ok)}
+.sec h2{font-size:1.2rem;flex:1;min-width:0}
+.sec h2 small{display:block;font:400 .86rem/1.4 var(--f-body);color:var(--muted);margin-top:3px}
+.chev{color:var(--gold-text);transition:transform .15s}
+.sec[open] .chev{transform:rotate(90deg)}
+.sec[open]>summary{border-bottom:1px solid var(--line)}
+.body{padding:20px;display:grid;gap:18px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.f{min-width:0;display:grid;gap:6px;align-content:start}
+label,.lab{font-weight:600;font-size:.9rem;color:var(--heading);letter-spacing:.02em}
+.hint{font-size:.82rem;color:var(--muted);line-height:1.5}
+.opt{font-weight:400;color:var(--muted);font-size:.78rem;margin-left:6px}
+input[type=text],input[type=number],select,textarea{width:100%;font:inherit;font-size:.95rem;line-height:1.5;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:0;padding:10px 12px}
+textarea{resize:vertical;min-height:88px}
+#skills{min-height:150px}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:0}
+.seg{display:flex;flex-wrap:wrap;gap:10px}
+.seg input,.tone input{position:absolute;opacity:0;pointer-events:none}
+.seg label{font-weight:500;font-size:.9rem;color:var(--fg);letter-spacing:0;border:1px solid var(--line);background:var(--bg);padding:9px 15px;cursor:pointer}
+.seg input:checked+label{border-color:var(--gold);background:var(--tint);color:var(--heading)}
+.seg input:focus-visible+label,.tone input:focus-visible+label{outline:2px solid var(--gold);outline-offset:2px}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400;color:var(--fg);letter-spacing:0}
+.check input{margin-top:.5em;accent-color:var(--gold)}
+.tone{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tone label{display:block;border:1px solid var(--line);padding:14px 16px;cursor:pointer;background:var(--bg);font-weight:400;letter-spacing:0}
+.tone label b{display:block;font:600 1.05rem var(--f-display);color:var(--heading);margin-bottom:3px}
+.tone label span{font-size:.85rem;color:var(--muted);line-height:1.5;display:block}
+.tone input:checked+label{border-color:var(--gold);background:var(--tint)}
+@media (max-width:480px){.tone{grid-template-columns:1fr}}
+.callout{border-left:2px solid var(--gold);background:var(--bg-alt);padding:12px 14px;font-size:.9rem;color:var(--muted)}
+.callout b{color:var(--heading)}
+.divider{border:0;border-top:1px solid var(--line);margin:2px 0;width:100%}
+
+/* output column */
+aside.out{position:sticky;top:calc(98px + env(safe-area-inset-top,0px));display:grid;gap:14px;min-width:0}
+@media (max-width:980px){aside.out{position:static}}
+.panel{background:var(--surface);border:1px solid var(--line);padding:18px 20px;min-width:0}
+.panel h3{font-size:1.15rem;display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:6px}
+.pill{font:600 .72rem var(--f-mono);letter-spacing:.04em;padding:3px 9px;border:1px solid var(--gold);color:var(--gold-text);background:var(--surface)}
+.rule{width:56px;height:2px;background:var(--gold-grad);border:0;margin:10px 0 0}
+.checks{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;max-height:300px;overflow:auto}
+.checks li{display:flex;gap:10px;font-size:.86rem;line-height:1.5;padding:9px 11px;background:var(--tint);color:var(--fg)}
+.checks li.good{background:var(--ok-bg)}
+.checks li i{font-style:normal;font-weight:700;flex:none;color:var(--gold-text)}
+.checks li.good i{color:var(--ok)}
+#prompt{font:12.5px/1.55 var(--f-mono);height:min(50vh,440px);margin-top:12px;background:var(--bg)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.status{font-size:.86rem;color:var(--ok)}
+.next{font-size:.86rem;color:var(--muted);margin-top:12px}
+
+/* footer */
+.site-footer{background:var(--hero-bg);margin-top:48px;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:36px max(16px,env(safe-area-inset-left,0px)) calc(28px)}
+.foot{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:center;justify-content:space-between}
+.foot p{font-size:.86rem;color:var(--muted);max-width:56ch}
+.legal{margin-top:24px;padding-top:16px;border-top:1px solid var(--gold-line);font-size:.8rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* CV builder additions */
+.job{border:1px solid var(--line);background:var(--bg);margin-bottom:12px}
+.job>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px 14px}
+.job>summary::-webkit-details-marker{display:none}
+.jn{font:600 1.35rem/1 var(--f-display);color:var(--gold-text);width:26px;flex:none}
+.jt{flex:1;min-width:0;font-weight:600;color:var(--heading);overflow-wrap:anywhere}
+.rm{font:inherit;font-size:.78rem;font-weight:600;border:1px solid var(--line);background:transparent;color:var(--muted);padding:4px 10px;cursor:pointer;border-radius:0}
+.rm:hover{border-color:var(--error);color:var(--error)}
+.jbody{padding:18px 14px 20px;display:grid;gap:16px;border-top:1px solid var(--line);background:var(--surface)}
+.jdblock{border:1px solid var(--line);background:var(--bg);padding:14px;display:grid;gap:12px;margin-bottom:12px}
+.jd-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.check.small{font-size:.82rem;margin-top:4px}
+input[type=file]{font:inherit;font-size:.88rem;color:var(--muted);max-width:100%}
+input:disabled{opacity:.5}
+.jdtext{min-height:140px}
+.hint.jdmsg{min-height:1em}
+
+/* shared additions for upload tools */
+.up{display:grid;gap:6px;border:1px dashed var(--gold);background:var(--bg);padding:12px 14px}
+.up .lab{font-size:.88rem}
+.chk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px 18px}
+.chk-grid label.check{font-size:.92rem;margin:0}
+#cvText,#bg,#jdText{min-height:180px}
+.disc{margin-top:36px;border:1px solid var(--line);border-left:3px solid var(--gold);background:var(--surface);padding:20px 22px;display:grid;gap:12px}.disc h2{font-size:1.1rem}.disc p{font-size:.86rem;color:var(--muted);line-height:1.7}.short-disc{font-size:.84rem;color:var(--fg);background:var(--tint);padding:9px 12px;margin-top:12px;line-height:1.55}.short-disc a{color:var(--heading)}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" data-home aria-label="Tal Solutions home">
+      <span class="mono" aria-hidden="true">T</span>
+      <span class="brand-text"><span class="wordmark">TAL SOLUTIONS K.K.</span><span class="tagline">TECHNOLOGY RECRUITMENT</span></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="btn ghost small" data-home>&larr; Home</a>
+    <a class="btn ghost small" href="../../index.html#tools">All free tools</a>
+    <button class="btn small" id="copyTop" type="button">Copy prompt</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap"><div class="frame"><span class="mono" aria-hidden="true">T</span>
+    <div class="hero-copy">
+      <p class="eyebrow">Free career tool</p>
+      <h1>Career Plan Visualizer</h1>
+      <p class="lead">Tell us where you are and where you dream of being. The prompt you get at the end asks an AI assistant to map several realistic paths between the two, each written as the next chapters of your CV, with advice on what to focus on at every step. Use it to explore options and decide what to aim for next.</p>
+      <div class="example" id="exampleBar"><span>Example answers are filled in so you can see how it works.</span><button class="btn small ghost" id="clearAll" type="button">Clear and start my own</button></div>
+    </div>
+  </div></div>
+</section>
+
+<div class="wrap">
+<div class="grid">
+<form id="form" autocomplete="off" onsubmit="return false">
+<details class="sec" open data-sec="now"><summary><span class="num">1</span><h2>Where you are now<small>Your CV and current situation</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+
+  <div class="row">
+    <div class="f"><label for="role">Current role</label><input type="text" id="role"></div>
+    <div class="f"><label for="employer">Type and size of employer</label><input type="text" id="employer" placeholder="e.g. Small technology vendor, 40 staff"></div>
+    <div class="f"><label for="years">Years of experience</label><input type="text" id="years"></div>
+  </div>
+  <div class="f"><label for="cvText">Your CV</label><textarea id="cvText" placeholder="Paste your CV here, or upload it below. No CV yet? Describe your jobs, education and skills in a few lines."></textarea></div>
+  <div class="up"><label class="lab" for="cvFile">Or upload your CV</label><input type="file" id="cvFile" data-target="cvText" data-msg="cvMsg" accept=".pdf,.docx,.txt,.md,.html,.htm"><p class="hint" id="cvMsg" aria-live="polite">PDF, Word (.docx) or text. The file is read in your browser and never uploaded anywhere. Uploaded text is added to the box above so you can check and edit it.</p></div>
+
+</div></details>
+<details class="sec" open data-sec="dream"><summary><span class="num">2</span><h2>Your dream<small>Where you would love to end up</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+
+  <div class="f"><label for="dream">Your dream or goal</label><input type="text" id="dream" placeholder="e.g. CIO at a large corporation"></div>
+  <div class="f"><label for="dreamWhy">Why does this appeal to you?</label><textarea id="dreamWhy"></textarea><p class="hint">What would you be doing, who would you be working with, what would it give you?</p></div>
+  <div class="f"><label for="dreamAlt">Other roles that also interest you<span class="opt">optional</span></label><textarea id="dreamAlt" placeholder="If your dream changed, what else could it be?"></textarea></div>
+  <div class="row">
+    <div class="f"><label for="horizon">How far ahead are you thinking?</label><select id="horizon"><option value="">Not sure</option><option>5 years</option><option>10 years</option><option>15 years</option><option>20 years or more</option></select></div>
+    <div class="f"><label for="certainty">How sure are you about this goal?</label><select id="certainty"><option value="">Not stated</option><option>Very sure</option><option>Fairly sure</option><option>It is an idea I want to test</option><option>I only know I want something different</option></select></div>
+  </div>
+  <div class="callout"><b>Unsure or too many ideas?</b> That is fine. Write the most exciting one, and use the "other roles" box for the rest. The AI will treat a vague goal as something to explore.</div>
+
+</div></details>
+<details class="sec" data-sec="matters"><summary><span class="num">3</span><h2>What matters to you<small>Your values, strengths and worries</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+
+  <div class="f"><span class="lab">What matters most in your career<span class="opt">pick any</span></span><div class="chk-grid"><label class="check"><input type="checkbox" name="vals" value="Leading and developing people"><span>Leading and developing people</span></label>
+<label class="check"><input type="checkbox" name="vals" value="Deep technical expertise"><span>Deep technical expertise</span></label>
+<label class="check"><input type="checkbox" name="vals" value="High income"><span>High income</span></label>
+<label class="check"><input type="checkbox" name="vals" value="Work-life balance"><span>Work-life balance</span></label>
+<label class="check"><input type="checkbox" name="vals" value="Stability and security"><span>Stability and security</span></label>
+<label class="check"><input type="checkbox" name="vals" value="Making a social or industry impact"><span>Making a social or industry impact</span></label>
+<label class="check"><input type="checkbox" name="vals" value="International work"><span>International work</span></label>
+<label class="check"><input type="checkbox" name="vals" value="Ownership and building things"><span>Ownership and building things</span></label>
+<label class="check"><input type="checkbox" name="vals" value="Fast growth and learning"><span>Fast growth and learning</span></label>
+<label class="check"><input type="checkbox" name="vals" value="Autonomy and flexibility"><span>Autonomy and flexibility</span></label></div></div>
+  <div class="f"><label for="strengths">Your strengths<span class="opt">what others rely on you for</span></label><textarea id="strengths"></textarea></div>
+  <div class="f"><label for="worries">Your worries or what you think is missing</label><textarea id="worries" placeholder="e.g. No management experience, no degree in this field, weak at presenting to executives."></textarea></div>
+  <div class="f"><label for="avoid">What you do not want<span class="opt">optional</span></label><textarea id="avoid" placeholder="e.g. Constant travel, a role with no hands-on work, moving overseas."></textarea></div>
+
+</div></details>
+<details class="sec" data-sec="situation"><summary><span class="num">4</span><h2>Your situation<small>Constraints and how you like to take risks</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+
+  <div class="row">
+    <div class="f"><label for="market">Where you work or want to work</label><input type="text" id="market" placeholder="e.g. Tokyo, Japan"></div>
+    <div class="f"><label for="relocate">Willing to relocate?</label><select id="relocate"><option value="">Not stated</option><option>No, I want to stay where I am</option><option>Within my country</option><option>Overseas is possible</option><option>Yes, anywhere</option></select></div>
+    <div class="f"><label for="risk">Appetite for risk</label><select id="risk"><option value="">Not stated</option><option>Stability first</option><option>Balanced</option><option>Happy to take big risks</option></select></div>
+  </div>
+  <div class="row">
+    <div class="f"><label for="study">Further study</label><select id="study"><option value="">Not stated</option><option>Not interested</option><option>Short courses and certifications</option><option>Part-time degree or MBA possible</option><option>Full-time study possible</option></select></div>
+    <div class="f"><label for="langs">Languages</label><input type="text" id="langs" placeholder="e.g. English native, Japanese business level"></div>
+  </div>
+  <div class="f"><label for="limits">Anything else the plan must respect<span class="opt">optional</span></label><textarea id="limits" placeholder="Family, finances, health, visa, caring responsibilities, time available to study."></textarea></div>
+
+</div></details>
+<details class="sec" open data-sec="output"><summary><span class="num">5</span><h2>What you want to see<small>How many paths and what to include</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+
+  <div class="row">
+    <div class="f"><label for="nPaths">Number of different paths</label><select id="nPaths"><option>3</option><option>2</option><option>4</option></select></div>
+    <div class="f"><label for="lang">Language of the result</label><select id="lang"><option>English</option><option>Japanese</option></select></div>
+  </div>
+  <div class="f"><span class="lab">Include</span>
+    <label class="check"><input type="checkbox" id="oWild" checked><span>One less obvious path that I might not think of</span></label>
+    <label class="check"><input type="checkbox" id="oReal" checked><span>A candid realism check on each path</span></label>
+    <label class="check"><input type="checkbox" id="oNext" checked><span>My next 12 months and the next roles I could target now</span></label>
+    <label class="check"><input type="checkbox" id="oQ" checked><span>Reflection questions to discuss with a career consultant</span></label>
+  </div>
+
+</div></details>
+
+</form>
+
+<aside class="out">
+  <div class="panel">
+    <h3>Plan readiness <span class="pill" id="prog">0 of 0</span></h3>
+    <p class="hint">Updates as you type. These are suggestions, not errors.</p>
+    <ul class="checks" id="checks"></ul>
+  </div>
+  <div class="panel">
+    <h3>Your prompt</h3>
+    <p class="hint">Copy this into any AI assistant (ChatGPT, Claude, Gemini and others). Use one that can search the web if you can.</p>
+    <textarea id="prompt" readonly aria-label="Generated prompt"></textarea>
+    <div class="actions"><button class="btn" id="copy" type="button">Copy prompt</button><span class="status" id="status" role="status"></span></div>
+    <p class="short-disc"><b>Use this as support, not as the final product.</b> AI output can contain mistakes. Review and verify everything before you use or submit it. <a href="#disclaimer">Read the full disclaimer</a>.</p>
+    <p class="next">These paths are illustrative, not predictions. Bring the result to a career consultation to choose your next step.</p>
+  </div>
+</aside>
+</div>
+</div>
+<div class="wrap"><div class="disc" id="disclaimer"><h2>Disclaimer</h2><p>This tool is provided free of charge for general information and support only. It generates a text prompt for you to use with a third-party AI service of your choice. Tal Solutions K.K. does not operate, control or endorse those services and is not responsible for what they produce. AI output can be inaccurate, incomplete or out of date, and may not suit your situation. Tal Solutions K.K. makes no guarantee about the accuracy, completeness or suitability of anything these tools or any AI service produce, including any job description, CV, resume, career plan or interview material, and does not guarantee any interview, job offer, hire or other outcome. You are responsible for reviewing, correcting and verifying everything before you use or submit it, and for the decisions you make. These tools are meant to support your own goals, not to replace your judgment. They do not provide legal, employment, financial or career advice. Please do not enter sensitive personal information such as My Number, passport or bank details. To the fullest extent permitted by law, Tal Solutions K.K. is not liable for any loss or damage arising from use of these tools or reliance on their output. Your use of any AI service is subject to that service's own terms and privacy policy.</p><p lang="ja">本ツールは、一般的な情報提供および作業支援を目的として無料で提供しています。本ツールが作成するのは、お客様が任意に選ぶ外部のAIサービスで使用するためのプロンプト(指示文)です。株式会社Tal Solutions(以下「当社」)は、これらの外部サービスを運営・管理・推奨しておらず、その出力内容について責任を負いません。AIの出力には、誤り、漏れ、情報の古さが含まれる場合があり、お客様の状況に適さない場合があります。当社は、本ツールまたはAIサービスが生成する求人票、CV、履歴書、職務経歴書、キャリアプラン、面接対策資料などの内容の正確性、完全性、適合性を保証せず、面接の通過、内定、採用その他の結果も保証しません。ご利用・ご提出の前に、内容を必ずご自身で確認・修正・検証してください。最終的な判断と責任はお客様ご自身が負うものとします。本ツールはお客様ご自身の目標を支援するためのものであり、お客様の判断に代わるものではありません。また、法律、雇用、財務、キャリアに関する助言を提供するものでもありません。マイナンバー、パスポート番号、口座情報などの機微な個人情報は入力しないでください。当社は、法令で認められる最大限の範囲で、本ツールの利用または出力内容への依存により生じた損害について責任を負いません。外部AIサービスのご利用には、各サービスの利用規約およびプライバシーポリシーが適用されます。</p></div></div>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot">
+      <a class="brand" data-home aria-label="Tal Solutions home"><span class="mono" aria-hidden="true">T</span><span class="brand-text"><span class="wordmark">TAL SOLUTIONS K.K.</span><span class="tagline">TECHNOLOGY RECRUITMENT</span></span></a>
+      <p>Bilingual technology recruitment for financial services, fintech and technology companies in Japan. This tool is free to use. Files are read in your browser and nothing you enter leaves this page until you paste the prompt into an AI service yourself.</p>
+    </div>
+    <p class="legal">&copy; Tal Solutions K.K. 株式会社Tal Solutions &middot; <a href="#disclaimer">Disclaimer</a> &middot; <a href="../../index.html#privacy">Privacy Policy</a></p>
+  </div>
+</footer>
+<script>
+(function(){
+
+/* HOME LINK: put your homepage address between the quotes, e.g. "/" or "https://yourdomain.com/". While empty, the logo and Home button do nothing. */
+var HOME_URL="../../index.html";
+document.querySelectorAll('a[data-home]').forEach(function(a){if(HOME_URL)a.setAttribute('href',HOME_URL)});
+var $=function(id){return document.getElementById(id)};
+var v=function(id){var e=$(id);return e?(e.value||'').trim():''};
+var radio=function(n){var e=document.querySelector('input[name="'+n+'"]:checked');return e?e.value:''};
+var lines=function(s){return s.split(/\n+/).map(function(x){return x.replace(/^[\s\-•*]+/,'').trim()}).filter(Boolean)};
+var bullets=function(s){return lines(s).map(function(x){return '  - '+x}).join('\n')};
+var picked=function(name){return Array.prototype.map.call(document.querySelectorAll('input[name="'+name+'"]:checked'),function(e){return e.value})};
+
+function extractText(f,done,fail){
+  var n=f.name.toLowerCase(),r=new FileReader();
+  if(f.size>8000000)return fail('That file is too large. Paste the text instead.');
+  if(/\.(txt|md|html?)$/.test(n)){
+    r.onload=function(){var t=String(r.result||'');
+      if(/\.html?$/.test(n)){var d=document.createElement('div');d.innerHTML=t.replace(/<(script|style)[\s\S]*?<\/\1>/gi,'');t=d.textContent||''}
+      done(t)};
+    r.onerror=function(){fail('Could not read that file. Paste the text instead.')};r.readAsText(f);return;
+  }
+  if(/\.docx$/.test(n)){
+    if(!window.mammoth)return fail('Word reading is not available right now. Paste the text instead.');
+    r.onload=function(){window.mammoth.extractRawText({arrayBuffer:r.result}).then(function(x){done(x.value)},function(){fail('Could not read that Word file. Paste the text instead.')})};
+    r.onerror=function(){fail('Could not read that file. Paste the text instead.')};r.readAsArrayBuffer(f);return;
+  }
+  if(/\.pdf$/.test(n)){
+    if(!window.pdfjsLib)return fail('PDF reading is not available right now. Paste the text instead.');
+    try{window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'}catch(e){}
+    r.onload=function(){
+      window.pdfjsLib.getDocument({data:new Uint8Array(r.result)}).promise.then(function(pdf){
+        var parts=[];
+        var page=function(i){
+          if(i>pdf.numPages)return Promise.resolve();
+          return pdf.getPage(i).then(function(pg){return pg.getTextContent()}).then(function(tc){
+            var s='';tc.items.forEach(function(it){s+=it.str+(it.hasEOL?'\n':' ')});parts.push(s);return page(i+1)});
+        };
+        return page(1).then(function(){return parts.join('\n')});
+      }).then(done,function(){fail('Could not read that PDF. Paste the text instead.')});
+    };
+    r.onerror=function(){fail('Could not read that file. Paste the text instead.')};r.readAsArrayBuffer(f);return;
+  }
+  fail('This file type cannot be read here. Use PDF, Word (.docx), or a text file, or paste the text.');
+}
+document.addEventListener('change',function(ev){
+  var t=ev.target;
+  if(!(t&&t.type==='file'&&t.dataset&&t.dataset.target&&t.files&&t.files[0]))return;
+  var ta=$(t.dataset.target),msg=$(t.dataset.msg),f=t.files[0];
+  msg.textContent='Reading '+f.name+'...';
+  extractText(f,function(txt){
+    txt=String(txt||'').replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+    if(!txt){msg.textContent='No readable text found (a scanned file?). Paste the text instead.';t.value='';return}
+    ta.value=(ta.value?ta.value+'\n\n':'')+txt;msg.textContent='Loaded '+f.name+'. Check the text below and fix anything that looks off.';t.value='';update();
+  },function(m){msg.textContent=m;t.value=''});
+});
+function updateSections(SECS){
+  var n=0;
+  document.querySelectorAll('details.sec').forEach(function(d){
+    var ok=!!SECS[d.dataset.sec]();var nm=d.querySelector('.num');
+    d.classList.toggle('done',ok);if(!nm.dataset.i)nm.dataset.i=nm.textContent;
+    nm.textContent=ok?'✓':nm.dataset.i;if(ok)n++;
+  });
+  $('prog').textContent=n+' of '+document.querySelectorAll('details.sec').length;
+}
+function renderChecks(cl){
+  var ul=$('checks');ul.innerHTML='';
+  if(!cl.length)cl=[{ok:true,t:'Start filling in sections and suggestions will appear here.'}];
+  cl.slice(0,12).forEach(function(c){var li=document.createElement('li');if(c.ok)li.className='good';
+    var i=document.createElement('i');i.textContent=c.ok?'✓':'!';var s=document.createElement('span');s.textContent=c.t;li.appendChild(i);li.appendChild(s);ul.appendChild(li)});
+}
+function sortChecks(out){return out.filter(function(o){return !o.ok}).concat(out.filter(function(o){return o.ok}))}
+function copy(){
+  var ta=$('prompt');var st=$('status');
+  var done=function(){st.textContent='Copied. Paste it into your AI assistant.';setTimeout(function(){st.textContent=''},3500)};
+  var fb=function(){ta.focus();ta.select();try{document.execCommand('copy');done()}catch(e){st.textContent='Press Ctrl/Cmd+C to copy the selected text.'}};
+  try{navigator.clipboard.writeText(ta.value).then(done,fb)}catch(e){fb()}
+}
+function fillForm(E){
+  Object.keys(E.text||{}).forEach(function(k){$(k).value=E.text[k]});
+  Object.keys(E.sel||{}).forEach(function(k){$(k).value=E.sel[k]});
+  Object.keys(E.checks||{}).forEach(function(k){$(k).checked=E.checks[k]});
+  Object.keys(E.names||{}).forEach(function(n){document.querySelectorAll('input[name="'+n+'"]').forEach(function(c){c.checked=E.names[n].indexOf(c.value)>-1})});
+}
+function clearForm(defaultChecks){
+  document.querySelectorAll('#form input[type=text],#form textarea').forEach(function(e){e.value=''});
+  document.querySelectorAll('#form select').forEach(function(s){s.selectedIndex=0});
+  document.querySelectorAll('#form input[type=checkbox]').forEach(function(c){c.checked=defaultChecks.indexOf(c.id)>-1||defaultChecks.indexOf(c.value)>-1});
+  $('exampleBar').hidden=true;
+}
+$('form').addEventListener('input',function(){update()});
+$('form').addEventListener('change',function(){update()});
+$('copy').addEventListener('click',copy);
+$('copyTop').addEventListener('click',copy);
+document.querySelectorAll('details.sec .num').forEach(function(n){n.dataset.i=n.textContent});
+
+var EX={text:{role:'Technical Support Engineer',employer:'Small technology vendor, about 40 staff',years:'6',
+ cvText:'Technical Support Engineer, Example Software KK (2020 - present)\n- Handle escalated cases for enterprise customers, about 25 a week\n- Built an internal knowledge base that cut average resolution time by 30%\n- Mentor 2 new support engineers\n\nIT Helpdesk Analyst, Example Services (2018 - 2020)\n- First-line support for 800 users\n\nBA Business Administration, Example University (2018)\nSkills: troubleshooting, SQL, Linux basics, customer communication. English native, Japanese business level.',
+ dream:'CIO at a large corporation',dreamWhy:'I like connecting technology to business decisions and want to lead technology strategy and a large team.',dreamAlt:'CTO of a growth-stage company; Head of IT at a regional bank',
+ strengths:'Calm under pressure, explain technical things clearly to non-technical people, quick to learn new products.',worries:'No management title yet, no experience with budgets, only worked at a small company.',avoid:'Constant international travel.',
+ market:'Tokyo, Japan',langs:'English native, Japanese business level',limits:'Can study part-time, about 5 hours a week.'},
+ sel:{horizon:'15 years',certainty:'Fairly sure',relocate:'Within my country',risk:'Balanced',study:'Part-time degree or MBA possible',nPaths:'3',lang:'English'},
+ checks:{oWild:true,oReal:true,oNext:true,oQ:true},
+ names:{vals:['Leading and developing people','Fast growth and learning','Making a social or industry impact']}};
+
+function build(){
+ var P=[];var n=v('nPaths')||'3';
+ P.push('You are a senior career strategist and executive recruiter who understands how careers really progress, in Japan and globally. Using my CV and goal below, create '+n+' different realistic career paths from where I am now to my goal. Write each path as an extension of my CV (future positions), with advice on what I must do to step up into each role.\n');
+ P.push('=== HOW TO WORK ===\n'+
+ '1. Ground every path in real patterns: how people with similar starting points actually reached this kind of role, based on public career profiles (LinkedIn, executive biographies, company leadership pages, interviews, industry articles). Search the web if you can. If you cannot, say so and rely on general knowledge. Describe patterns only. Never name, copy or identify any real person; label every future CV as an illustrative composite.\n'+
+ '2. Do not use real company names for future positions. Describe the employer generically, for example "large global SaaS vendor", "mid-sized Japanese financial institution" or "Series B startup". Companies already on my CV may keep their names.\n'+
+ '3. Make the paths genuinely different (for example: different industry, function, company size, specialist vs generalist, or credential route) so I can see several ways forward and my imagination is not limited'+($('oWild').checked?'. Make one path an unconventional route I might not have thought of':'')+'. Give each path a short memorable name.\n'+
+ '4. Be realistic about time. Use years counted from now (Year 0 = today) and give ranges. Say which steps are rare, highly competitive or depend on luck or timing.\n'+
+ '5. Do not flatter me. Name the real gaps between where I am and my goal, and what usually blocks people at each step.\n'+
+ '6. Fit the paths to me. Respect my values, strengths, worries and limits below, and tell me where a path conflicts with something I said I do not want.\n'+
+ '7. If my goal is vague or I listed several, first state in two or three lines how you interpreted it.\n');
+
+ var a='=== MY STARTING POINT ===\n';
+ if(v('role'))a+='- Current role: '+v('role')+'\n';
+ if(v('employer'))a+='- Employer: '+v('employer')+'\n';
+ if(v('years'))a+='- Years of experience: '+v('years')+'\n';
+ if(v('market'))a+='- Market: '+v('market')+'\n';
+ if(v('langs'))a+='- Languages: '+v('langs')+'\n';
+ P.push(a);
+ P.push('=== MY CV ===\n'+(v('cvText')||'(No CV provided. Ask me for the key facts before continuing, or work from the details above and mark assumptions.)')+'\n');
+ var g='=== MY GOAL ===\n';
+ g+='- Dream or goal: '+(v('dream')||'(not stated; help me explore options)')+'\n';
+ if(v('dreamWhy'))g+='- Why it appeals: '+v('dreamWhy')+'\n';
+ if(v('dreamAlt'))g+='- Other interests: '+v('dreamAlt')+'\n';
+ if(v('horizon'))g+='- Time horizon: '+v('horizon')+'\n';
+ if(v('certainty'))g+='- How sure I am: '+v('certainty')+'\n';
+ P.push(g);
+ var m='';var vals=picked('vals');
+ if(vals.length)m+='- What matters most to me: '+vals.join(', ')+'\n';
+ if(v('strengths'))m+='- My strengths: '+v('strengths')+'\n';
+ if(v('worries'))m+='- My worries or gaps: '+v('worries')+'\n';
+ if(v('avoid'))m+='- What I do not want: '+v('avoid')+'\n';
+ if(v('relocate'))m+='- Relocation: '+v('relocate')+'\n';
+ if(v('risk'))m+='- Appetite for risk: '+v('risk')+'\n';
+ if(v('study'))m+='- Further study: '+v('study')+'\n';
+ if(v('limits'))m+='- Other limits: '+v('limits')+'\n';
+ if(m)P.push('=== MY VALUES, STRENGTHS AND LIMITS ===\n'+m);
+
+ var o='=== WHAT TO PRODUCE (write in '+v('lang')+') ===\n'+
+ 'A. MY STARTING POINT: 5 lines on where I stand today, then in plain words what changes between my current role and my goal (scope, number of people, budget, strategy, visibility).\n'+
+ 'B. '+n+' PATHS. For each path:\n'+
+ '   1. Name, who this path suits, and a one-line summary.\n'+
+ '   2. FUTURE CV: my existing CV summarised briefly, then each future position written like a CV entry: title, generic employer description, approximate timing (Year +X to +Y), and 3 or 4 bullets of the kind of accomplishments someone at that point would need to show. Mark these as target accomplishments, not facts.\n'+
+ '   3. HOW TO STEP UP into each position: the skills, experience, scope, relationships, credentials and visible evidence needed; what I can do in my current role to prepare; the typical pitfalls; how people get noticed for the move.\n'+
+ '   4. What I would give up or risk on this path.\n'+
+ ($('oReal').checked?'   5. Realism check: difficulty from 1 to 5 with the reason, and the factors outside my control.\n':'')+
+ 'C. A side-by-side comparison table of the paths: time to goal, difficulty, risk, income potential, and fit with what matters to me.\n'+
+ 'D. Common threads: the skills and experiences that help on every path.\n'+
+ ($('oNext').checked?'E. MY NEXT 12 MONTHS: concrete actions, plus 3 realistic next roles I could target now (described generically), what each would teach me and which paths each keeps open.\n':'')+
+ ($('oQ').checked?'F. REFLECTION QUESTIONS: 6 to 8 sharp questions to think about and discuss with a career consultant to decide my direction.\n':'')+
+ 'G. Honest caveats: what cannot be predicted, and what would change this advice.\n';
+ P.push(o);
+ return P.join('\n');
+}
+
+function checks(){
+ var out=[];var add=function(ok,t){out.push({ok:ok,t:t})};
+ if(v('cvText').length<150)add(false,'Add your CV or a fuller description of your jobs. The paths build on what you have actually done.');else add(true,'CV added.');
+ if(v('dream').length<8)add(false,'Write down your dream or goal, even if you are unsure. It can be rough.');
+ else if(v('dream').split(/\s+/).length<3&&!v('dreamWhy'))add(false,'Say why your goal appeals to you. It helps the AI find paths that really suit you.');
+ if(!v('horizon'))add(false,'Choose a time horizon. A 5 year and a 15 year plan look very different.');
+ if(!picked('vals').length)add(false,'Pick what matters most to you. Paths that ignore your values are not much use.');
+ if(!v('strengths'))add(false,'List your strengths. The best paths build on what you already do well.');
+ if(!v('worries'))add(false,'Say where you think you fall short. The advice should address it directly.');
+ if(!v('market')&&!v('relocate'))add(false,'Say where you want to work. Careers in Tokyo, London and New York run differently.');
+ return sortChecks(out);
+}
+var SECS={
+ now:function(){return v('cvText').length>=150||v('role')},
+ dream:function(){return v('dream')},
+ matters:function(){return picked('vals').length||v('strengths')||v('worries')},
+ situation:function(){return v('market')||v('relocate')||v('risk')||v('limits')},
+ output:function(){return true}
+};
+function update(){updateSections(SECS);renderChecks(checks());$('prompt').value=build()}
+$('clearAll').addEventListener('click',function(){clearForm(['oWild','oReal','oNext','oQ']);update()});
+fillForm(EX);update();
+
+})();
+</script>
+</body>
+</html>

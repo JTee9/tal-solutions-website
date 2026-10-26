@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B3D2E">
+<meta name="description" content="Free Job Description Builder by Tal Solutions K.K. Answer a few hiring questions and get a ready-to-paste AI prompt for a high-quality job description.">
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Job Description Builder | Tal Solutions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Hanken+Grotesk:wght@400;500;600&family=Playfair+Display:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: Tal Solutions site theme. Sticky header with T monogram, framed hero band, form column of sections on the left, sticky prompt and hiring-plan check on the right. Single light look, same as the website. */
+:root{
+  --bg:#F8F6F1; --bg-alt:#EFEADD; --surface:#FFFDF8; --fg:#13291F; --muted:#4A5E55;
+  --heading:#0B3D2E; --gold-text:#85601A; --gold:#B8903F; --line:rgba(11,61,46,.16);
+  --btn-bg:#0B3D2E; --btn-fg:#F8F6F1; --btn-hover:#14543F;
+  --hero-bg:#E9E2CF; --gold-line:rgba(133,96,26,.55); --tint:rgba(184,144,63,.2);
+  --error:#9B2C2C; --ok:#1E6B45; --ok-bg:rgba(30,107,69,.12);
+  --logo-header:54px; --logo-hero:84px; --logo-letter:.9;
+  --gold-grad:linear-gradient(90deg,#C4943A,#E2C163 50%,#C4943A);
+  --f-display:"Playfair Display","Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  --f-wordmark:"Cinzel","Playfair Display",serif;
+  --f-body:"Hanken Grotesk","Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 var(--f-body);margin:0;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+h1,h2,h3{font-family:var(--f-display);color:var(--heading);font-weight:600;line-height:1.25;margin:0;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1240px;margin-inline:auto}
+.bleed{margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-text)}
+
+/* header */
+.site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--bg);border-bottom:1px solid var(--line);
+  margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.bar{display:flex;align-items:center;gap:20px;min-height:84px;flex-wrap:wrap;padding-block:8px}
+a.brand{text-decoration:none}
+.brand{display:flex;align-items:center;gap:14px;color:var(--heading);min-width:0}
+.mono{display:grid;place-items:center;width:var(--logo-header);height:var(--logo-header);flex:none;border:1.5px solid var(--gold);font-family:var(--f-display);font-weight:600;font-size:calc(var(--logo-header)*var(--logo-letter));line-height:1;color:var(--heading);padding-bottom:.04em}
+.brand-text{display:flex;flex-direction:column;gap:3px;min-width:0}
+.wordmark{font-family:var(--f-wordmark);font-weight:600;letter-spacing:.24em;font-size:1rem;line-height:1;white-space:nowrap}
+.tagline{font-family:var(--f-wordmark);font-weight:500;letter-spacing:.26em;font-size:.56rem;line-height:1;color:var(--gold-text);white-space:nowrap}
+.bar .spacer{flex:1}
+@media (max-width:420px){:root{--logo-header:44px}.wordmark{letter-spacing:.14em;font-size:.86rem}.tagline{letter-spacing:.14em}}
+
+/* buttons */
+.btn{display:inline-block;font:inherit;font-size:.9rem;font-weight:600;letter-spacing:.06em;padding:12px 24px;border:1px solid var(--btn-bg);background:var(--btn-bg);color:var(--btn-fg);cursor:pointer;transition:background .2s,border-color .2s,color .2s;border-radius:0}
+.btn:hover{background:var(--btn-hover);border-color:var(--btn-hover)}
+.btn.ghost{background:transparent;color:var(--heading);border-color:var(--gold)}
+.btn.ghost:hover{background:var(--gold);color:var(--btn-fg)}
+a.btn{text-decoration:none}
+a[data-home]:not([href]){cursor:default}
+.btn.small{padding:7px 14px;font-size:.82rem}
+
+/* hero */
+.hero{background:var(--hero-bg);padding-block:clamp(36px,6vw,64px);margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.frame{position:relative;border-left:1px solid var(--gold-line);border-bottom:1px solid var(--gold-line);padding:clamp(36px,5vw,60px) clamp(18px,4vw,56px) clamp(28px,4vw,44px)}
+.frame::before{content:"";position:absolute;top:0;left:0;right:150px;border-top:1px solid var(--gold-line)}
+.frame::after{content:"";position:absolute;right:0;top:78px;bottom:0;border-right:1px solid var(--gold-line)}
+.frame .mono{position:absolute;top:-28px;right:40px;width:var(--logo-hero);height:var(--logo-hero);font-size:calc(var(--logo-hero)*var(--logo-letter));background:var(--hero-bg);border-color:var(--gold-text)}
+@media (max-width:640px){.frame::before{right:112px}.frame::after{top:56px}.frame .mono{width:calc(var(--logo-hero)*.7);height:calc(var(--logo-hero)*.7);font-size:calc(var(--logo-hero)*.7*var(--logo-letter));top:-20px;right:28px}}
+.hero-copy{display:flex;flex-direction:column;gap:18px;align-items:flex-start;max-width:760px}
+h1{font-size:clamp(2rem,4.6vw,3.2rem);letter-spacing:-.01em}
+.lead{font-size:1.06rem;color:var(--muted);max-width:62ch}
+.example{display:flex;gap:12px;align-items:center;flex-wrap:wrap;border:1px solid var(--gold);background:var(--tint);padding:8px 8px 8px 14px;font-size:.9rem}
+
+/* layout */
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,480px);gap:clamp(24px,3vw,40px);margin-top:36px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:minmax(0,1fr)}}
+.sec{background:var(--surface);border:1px solid var(--line);margin-bottom:14px}
+.sec>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;padding:18px 20px}
+.sec>summary::-webkit-details-marker{display:none}
+.num{flex:none;width:34px;text-align:center;font:600 1.7rem/1 var(--f-display);color:var(--gold-text)}
+.sec.done .num{font:700 1.3rem/1 var(--f-body);color:var(--ok)}
+.sec h2{font-size:1.2rem;flex:1;min-width:0}
+.sec h2 small{display:block;font:400 .86rem/1.4 var(--f-body);color:var(--muted);margin-top:3px}
+.chev{color:var(--gold-text);transition:transform .15s}
+.sec[open] .chev{transform:rotate(90deg)}
+.sec[open]>summary{border-bottom:1px solid var(--line)}
+.body{padding:20px;display:grid;gap:18px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.f{min-width:0;display:grid;gap:6px;align-content:start}
+label,.lab{font-weight:600;font-size:.9rem;color:var(--heading);letter-spacing:.02em}
+.hint{font-size:.82rem;color:var(--muted);line-height:1.5}
+.opt{font-weight:400;color:var(--muted);font-size:.78rem;margin-left:6px}
+input[type=text],input[type=number],select,textarea{width:100%;font:inherit;font-size:.95rem;line-height:1.5;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:0;padding:10px 12px}
+textarea{resize:vertical;min-height:88px}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:0}
+.seg{display:flex;flex-wrap:wrap;gap:10px}
+.seg input,.tone input{position:absolute;opacity:0;pointer-events:none}
+.seg label{font-weight:500;font-size:.9rem;color:var(--fg);letter-spacing:0;border:1px solid var(--line);background:var(--bg);padding:9px 15px;cursor:pointer}
+.seg input:checked+label{border-color:var(--gold);background:var(--tint);color:var(--heading)}
+.seg input:focus-visible+label,.tone input:focus-visible+label{outline:2px solid var(--gold);outline-offset:2px}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400;color:var(--fg);letter-spacing:0}
+.check input{margin-top:.5em;accent-color:var(--gold)}
+.tone{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tone label{display:block;border:1px solid var(--line);padding:14px 16px;cursor:pointer;background:var(--bg);font-weight:400;letter-spacing:0}
+.tone label b{display:block;font:600 1.05rem var(--f-display);color:var(--heading);margin-bottom:3px}
+.tone label span{font-size:.85rem;color:var(--muted);line-height:1.5;display:block}
+.tone input:checked+label{border-color:var(--gold);background:var(--tint)}
+@media (max-width:480px){.tone{grid-template-columns:1fr}}
+.callout{border-left:2px solid var(--gold);background:var(--bg-alt);padding:12px 14px;font-size:.9rem;color:var(--muted)}
+.callout b{color:var(--heading)}
+.divider{border:0;border-top:1px solid var(--line);margin:2px 0;width:100%}
+
+/* output column */
+aside.out{position:sticky;top:calc(98px + env(safe-area-inset-top,0px));display:grid;gap:14px;min-width:0}
+@media (max-width:980px){aside.out{position:static}}
+.panel{background:var(--surface);border:1px solid var(--line);padding:18px 20px;min-width:0}
+.panel h3{font-size:1.15rem;display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:6px}
+.pill{font:600 .72rem var(--f-mono);letter-spacing:.04em;padding:3px 9px;border:1px solid var(--gold);color:var(--gold-text);background:var(--surface)}
+.rule{width:56px;height:2px;background:var(--gold-grad);border:0;margin:10px 0 0}
+.checks{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;max-height:300px;overflow:auto}
+.checks li{display:flex;gap:10px;font-size:.86rem;line-height:1.5;padding:9px 11px;background:var(--tint);color:var(--fg)}
+.checks li.good{background:var(--ok-bg)}
+.checks li i{font-style:normal;font-weight:700;flex:none;color:var(--gold-text)}
+.checks li.good i{color:var(--ok)}
+#prompt{font:12.5px/1.55 var(--f-mono);height:min(50vh,440px);margin-top:12px;background:var(--bg)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.status{font-size:.86rem;color:var(--ok)}
+.next{font-size:.86rem;color:var(--muted);margin-top:12px}
+
+/* footer */
+.site-footer{background:var(--hero-bg);margin-top:48px;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:36px max(16px,env(safe-area-inset-left,0px)) calc(28px)}
+.foot{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:center;justify-content:space-between}
+.foot p{font-size:.86rem;color:var(--muted);max-width:56ch}
+.legal{margin-top:24px;padding-top:16px;border-top:1px solid var(--gold-line);font-size:.8rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.disc{margin-top:36px;border:1px solid var(--line);border-left:3px solid var(--gold);background:var(--surface);padding:20px 22px;display:grid;gap:12px}.disc h2{font-size:1.1rem}.disc p{font-size:.86rem;color:var(--muted);line-height:1.7}.short-disc{font-size:.84rem;color:var(--fg);background:var(--tint);padding:9px 12px;margin-top:12px;line-height:1.55}.short-disc a{color:var(--heading)}
+</style>
+
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" data-home aria-label="Tal Solutions home">
+      <span class="mono" aria-hidden="true">T</span>
+      <span class="brand-text"><span class="wordmark">TAL SOLUTIONS K.K.</span><span class="tagline">TECHNOLOGY RECRUITMENT</span></span>
+    </a>
+    <span class="spacer"></span>
+    <a class="btn ghost small" data-home>&larr; Home</a>
+    <a class="btn ghost small" href="../../index.html#tools">All free tools</a>
+    <button class="btn small" id="copyTop" type="button">Copy prompt</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap"><div class="frame"><span class="mono" aria-hidden="true">T</span>
+    <div class="hero-copy">
+      <p class="eyebrow">Free hiring tool</p>
+      <h1>Job Description Builder</h1>
+      <p class="lead">Work through the questions a good hire starts with. Every field is optional, but each one makes your job description sharper and your hiring plan more realistic. When you are done, copy the prompt into ChatGPT, Claude, Gemini or any AI assistant to get a finished, consistently formatted JD.</p>
+      <div class="example" id="exampleBar"><span>Example answers are filled in so you can see how it works.</span><button class="btn small ghost" id="clearAll" type="button">Clear and start my own</button></div>
+    </div>
+  </div></div>
+</section>
+
+<div class="wrap">
+<div class="grid">
+<form id="form" autocomplete="off" onsubmit="return false">
+
+<details class="sec" open data-sec="role"><summary><span class="num">1</span><h2>The role<small>What to call it, where it sits</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+  <div class="f"><span class="lab">Do you already have a job title?</span>
+    <div class="seg" role="radiogroup">
+      <input type="radio" name="titleMode" id="tm1" value="set" checked><label for="tm1">Yes, I have one</label>
+      <input type="radio" name="titleMode" id="tm2" value="advise"><label for="tm2">No, suggest titles</label>
+    </div></div>
+  <div class="row">
+    <div class="f"><label for="title">Job title</label><input type="text" id="title"><p class="hint">Use the title candidates search for, not an internal code.</p></div>
+    <div class="f"><label for="oneLine">What the role does, in one sentence</label><input type="text" id="oneLine"><p class="hint">Needed most if you want title advice.</p></div>
+  </div>
+  <div class="row">
+    <div class="f"><label for="level">Level</label><select id="level"><option value="">Not decided</option><option>Intern / Trainee</option><option>Entry level</option><option>Mid level</option><option>Senior</option><option>Lead / Staff</option><option>Manager</option><option>Director</option><option>Executive</option></select></div>
+    <div class="f"><label for="empType">Employment type</label><select id="empType"><option value="">Not decided</option><option>Full-time, permanent</option><option>Part-time</option><option>Fixed-term contract</option><option>Freelance / consultant</option></select></div>
+    <div class="f"><label for="reportsTo">Reports to</label><input type="text" id="reportsTo" placeholder="e.g. Head of Customer Success"></div>
+  </div>
+  <div class="f"><label for="template">Company template or house rules<span class="opt">optional</span></label><textarea id="template" placeholder="Paste a required JD template, mandatory legal lines, or style rules. Leave empty to use the standard format."></textarea><p class="hint">If your HR team requires a format, paste it here and the AI will follow it.</p></div>
+</div></details>
+
+<details class="sec" data-sec="why"><summary><span class="num">2</span><h2>Why this role exists<small>Backfill or growth, and the case for the headcount</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+  <div class="f"><span class="lab">Type of opening</span>
+    <div class="seg" role="radiogroup">
+      <input type="radio" name="reason" id="r1" value="Backfill (replacing someone who left)"><label for="r1">Backfill</label>
+      <input type="radio" name="reason" id="r2" value="Expansion (growing the team)"><label for="r2">Expansion</label>
+      <input type="radio" name="reason" id="r3" value="New client or contract"><label for="r3">New client</label>
+      <input type="radio" name="reason" id="r4" value="New project or initiative"><label for="r4">New project</label>
+      <input type="radio" name="reason" id="r5" value="New function for the company"><label for="r5">New function</label>
+    </div></div>
+  <div class="f"><label for="demand">What specific demand triggered it?</label><textarea id="demand" placeholder="e.g. We signed 3 enterprise clients in Q3 and each needs a named point of contact."></textarea><p class="hint">A client, a launch, a growth target, a gap left by someone. Be concrete.</p></div>
+  <div class="f"><label for="justify">Why do you need a person, rather than a tool, a contractor or a reshuffle?</label><textarea id="justify" placeholder="e.g. Current team is at 140% capacity; response times have slipped 30%."></textarea><p class="hint">This is the argument you will make to finance, and it keeps the role honest.</p></div>
+</div></details>
+
+<details class="sec" data-sec="outcomes"><summary><span class="num">3</span><h2>What success looks like<small>Expected results over the first year</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+  <p class="hint">Describe results, not tasks. "Own onboarding for 10 accounts" beats "do onboarding".</p>
+  <div class="f"><label for="o90">First 3 months</label><textarea id="o90"></textarea></div>
+  <div class="f"><label for="o180">By 6 months</label><textarea id="o180"></textarea></div>
+  <div class="f"><label for="o365">By 12 months</label><textarea id="o365"></textarea></div>
+  <div class="f"><label for="duties">Main day-to-day responsibilities<span class="opt">optional, one per line</span></label><textarea id="duties"></textarea></div>
+</div></details>
+
+<details class="sec" data-sec="must"><summary><span class="num">4</span><h2>Minimum requirements<small>Keep the entry point low so more people can apply</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+  <div class="callout"><b>Test each item:</b> would someone who lacks it fail in this role within six months, with no way to learn it? If not, it belongs in preferred qualifications.</div>
+  <div class="f"><label for="must">Absolute minimum requirements<span class="opt">one per line</span></label><textarea id="must"></textarea></div>
+  <div class="f"><label for="mustWhy">Why is each one truly required?</label><textarea id="mustWhy"></textarea><p class="hint">Legal, safety, or something that cannot be learned in the first weeks.</p></div>
+  <div class="row">
+    <div class="f"><label for="years">Years of experience required</label><input type="number" id="years" min="0" max="40" placeholder="Leave empty if none"></div>
+    <div class="f"><label for="degree">Education</label><select id="degree"><option value="">Not decided</option><option value="Not required">Not required</option><option value="Degree or equivalent practical experience">Degree or equivalent experience</option><option value="Degree required">Degree required</option></select></div>
+  </div>
+  <hr style="border:0;border-top:1px solid var(--line);width:100%;margin:2px 0">
+  <div class="f"><label for="pref">Preferred qualifications<span class="opt">one per line</span></label><textarea id="pref"></textarea></div>
+  <div class="f"><label for="prefUse">How would each help in the role?</label><textarea id="prefUse"></textarea></div>
+  <div class="f"><label for="prefWhy">Why are they not required?</label><textarea id="prefWhy" placeholder="e.g. Can be learned on the job; a mentor on the team can coach this; training budget available."></textarea><p class="hint">This is what tells a strong candidate they should still apply.</p></div>
+</div></details>
+
+<details class="sec" data-sec="where"><summary><span class="num">5</span><h2>Location, languages and travel<small>Where, how and in what language the work happens</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+  <div class="f"><span class="lab">Working arrangement</span>
+    <div class="seg" role="radiogroup">
+      <input type="radio" name="mode" id="m1" value="On-site"><label for="m1">On-site</label>
+      <input type="radio" name="mode" id="m2" value="Hybrid"><label for="m2">Hybrid</label>
+      <input type="radio" name="mode" id="m3" value="Fully remote"><label for="m3">Remote</label>
+    </div></div>
+  <div class="row">
+    <div class="f"><label for="loc">Office city / eligible regions</label><input type="text" id="loc" placeholder="e.g. Tokyo, or Remote within Asia"></div>
+    <div class="f"><label for="days">Office days or timezone overlap</label><input type="text" id="days" placeholder="e.g. 3 days a week, or ±3h of JST"></div>
+  </div>
+  <div class="row">
+    <div class="f"><label for="travel">Travel</label><select id="travel"><option value="">Not decided</option><option>None</option><option>Occasional (up to 10%)</option><option>Regular (10-25%)</option><option>Frequent (25-50%)</option><option>Extensive (50%+)</option></select></div>
+    <div class="f"><label for="travelNote">Travel details</label><input type="text" id="travelNote" placeholder="e.g. Quarterly client visits in APAC"></div>
+  </div>
+  <div class="row">
+    <div class="f"><label for="langReq">Languages required</label><input type="text" id="langReq" placeholder="e.g. English (fluent), Japanese (business level)"></div>
+    <div class="f"><label for="langPref">Languages that are a plus</label><input type="text" id="langPref" placeholder="e.g. Mandarin"></div>
+  </div>
+  <div class="f"><label for="visa">Work authorization or relocation<span class="opt">optional</span></label><input type="text" id="visa" placeholder="e.g. Visa sponsorship available, relocation support"></div>
+</div></details>
+
+<details class="sec" data-sec="pay"><summary><span class="num">6</span><h2>Level and budget<small>So the profile matches what the market will accept</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+  <div class="row">
+    <div class="f"><label for="cur">Currency</label><input type="text" id="cur" placeholder="e.g. JPY, USD"></div>
+    <div class="f"><label for="salMin">Salary range, low</label><input type="text" id="salMin" inputmode="numeric"></div>
+    <div class="f"><label for="salMax">Salary range, high</label><input type="text" id="salMax" inputmode="numeric"></div>
+  </div>
+  <div class="row">
+    <div class="f"><label for="per">Paid per</label><select id="per"><option>year</option><option>month</option><option>hour</option></select></div>
+    <div class="f"><label for="showPay">Show pay in the JD?</label><select id="showPay"><option value="yes">Yes, publish the range</option><option value="no">No, keep private</option></select></div>
+  </div>
+  <div class="f"><label for="perks">Bonus, equity and benefits</label><textarea id="perks" placeholder="One per line: bonus, equity, insurance, leave, learning budget, equipment..."></textarea></div>
+  <p class="hint">Pay is only used to check the profile against the market and, if you choose, to publish the range. Posting a range typically lifts applications.</p>
+</div></details>
+
+<details class="sec" data-sec="co"><summary><span class="num">7</span><h2>Company, team and environment<small>Let AI look up the basics, then add what only you know</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+  <div class="row">
+    <div class="f"><label for="company">Company name</label><input type="text" id="company"></div>
+    <div class="f"><label for="dept">Department / team</label><input type="text" id="dept"></div>
+    <div class="f"><label for="site">Website<span class="opt">optional</span></label><input type="text" id="site" placeholder="example.com"></div>
+  </div>
+  <label class="check"><input type="checkbox" id="research" checked><span>Ask the AI to research the company and team from public sources<br><span class="hint">It will mark anything it cannot verify so you can fix it. Works best in assistants with web access.</span></span></label>
+  <div class="f"><label for="teamMake">Who is on the team?</label><textarea id="teamMake" placeholder="e.g. 6 people: 1 lead, 3 CSMs, 2 support specialists. Mix of tenures and backgrounds."></textarea><p class="hint">Size, seniority, who they will work with every day.</p></div>
+  <div class="f"><label for="env">What is it like to work here?</label><textarea id="env" placeholder="e.g. Fast, direct feedback. Async-first. Weekly demos. Little hierarchy."></textarea></div>
+  <div class="f"><label for="sell">Why would a great candidate choose this role?</label><textarea id="sell" placeholder="One per line, real reasons only: growth path, scope, product, people, stability, mission..."></textarea><p class="hint">Specific beats generic. "Own the Japan launch" beats "exciting growth".</p></div>
+</div></details>
+
+<details class="sec" open data-sec="tone"><summary><span class="num">8</span><h2>Voice<small>How the finished JD should sound</small></h2><span class="chev">▸</span></summary>
+<div class="body">
+  <div class="tone" role="radiogroup">
+    <div><input type="radio" name="tone" id="t1" value="formal" checked><label for="t1"><b>Formal and professional</b><span>Polished and precise. Suits established firms and regulated fields.</span></label></div>
+    <div><input type="radio" name="tone" id="t2" value="friendly"><label for="t2"><b>Laid-back and friendly</b><span>Warm and direct, start-up energy. Plain words, no jargon.</span></label></div>
+  </div>
+  <div class="f" style="max-width:320px"><label for="outLang">Language of the finished JD</label><select id="outLang"><option value="English">English</option><option value="Japanese">Japanese (日本語)</option><option value="both English and Japanese, as two complete versions, English first">English and Japanese</option></select></div>
+</div></details>
+
+</form>
+
+<aside class="out">
+  <div class="panel">
+    <h3>Hiring plan check <span class="pill" id="prog">0 of 8</span></h3>
+    <p class="hint">Updates as you type. These are prompts to think about, not errors.</p>
+    <ul class="checks" id="checks"></ul>
+  </div>
+  <div class="panel">
+    <h3>Your prompt</h3>
+    <p class="hint">Copy this into any AI assistant to get your job description plus a short hiring-plan review.</p>
+    <textarea id="prompt" readonly aria-label="Generated prompt"></textarea>
+    <div class="actions"><button class="btn" id="copy" type="button">Copy prompt</button><span class="status" id="status" role="status"></span></div>
+    <p class="short-disc"><b>Use this as support, not as the final product.</b> AI output can contain mistakes. Review and verify everything before you use or submit it. <a href="#disclaimer">Read the full disclaimer</a>.</p>
+    <p class="next" style="margin:12px 0 0">After the AI replies, read the "Hiring plan notes" at the end. Edit the JD once, then post it.</p>
+  </div>
+</aside>
+</div>
+</div>
+<div class="wrap"><div class="disc" id="disclaimer"><h2>Disclaimer</h2><p>This tool is provided free of charge for general information and support only. It generates a text prompt for you to use with a third-party AI service of your choice. Tal Solutions K.K. does not operate, control or endorse those services and is not responsible for what they produce. AI output can be inaccurate, incomplete or out of date, and may not suit your situation. Tal Solutions K.K. makes no guarantee about the accuracy, completeness or suitability of anything these tools or any AI service produce, including any job description, CV, resume, career plan or interview material, and does not guarantee any interview, job offer, hire or other outcome. You are responsible for reviewing, correcting and verifying everything before you use or submit it, and for the decisions you make. These tools are meant to support your own goals, not to replace your judgment. They do not provide legal, employment, financial or career advice. Please do not enter sensitive personal information such as My Number, passport or bank details. To the fullest extent permitted by law, Tal Solutions K.K. is not liable for any loss or damage arising from use of these tools or reliance on their output. Your use of any AI service is subject to that service's own terms and privacy policy.</p><p lang="ja">本ツールは、一般的な情報提供および作業支援を目的として無料で提供しています。本ツールが作成するのは、お客様が任意に選ぶ外部のAIサービスで使用するためのプロンプト(指示文)です。株式会社Tal Solutions(以下「当社」)は、これらの外部サービスを運営・管理・推奨しておらず、その出力内容について責任を負いません。AIの出力には、誤り、漏れ、情報の古さが含まれる場合があり、お客様の状況に適さない場合があります。当社は、本ツールまたはAIサービスが生成する求人票、CV、履歴書、職務経歴書、キャリアプラン、面接対策資料などの内容の正確性、完全性、適合性を保証せず、面接の通過、内定、採用その他の結果も保証しません。ご利用・ご提出の前に、内容を必ずご自身で確認・修正・検証してください。最終的な判断と責任はお客様ご自身が負うものとします。本ツールはお客様ご自身の目標を支援するためのものであり、お客様の判断に代わるものではありません。また、法律、雇用、財務、キャリアに関する助言を提供するものでもありません。マイナンバー、パスポート番号、口座情報などの機微な個人情報は入力しないでください。当社は、法令で認められる最大限の範囲で、本ツールの利用または出力内容への依存により生じた損害について責任を負いません。外部AIサービスのご利用には、各サービスの利用規約およびプライバシーポリシーが適用されます。</p></div></div>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot">
+      <a class="brand" data-home aria-label="Tal Solutions home"><span class="mono" aria-hidden="true">T</span><span class="brand-text"><span class="wordmark">TAL SOLUTIONS K.K.</span><span class="tagline">TECHNOLOGY RECRUITMENT</span></span></a>
+      <p>Bilingual technology recruitment for financial services, fintech and technology companies in Japan. This tool is free to use. Nothing you enter leaves this page.</p>
+    </div>
+    <p class="legal">&copy; Tal Solutions K.K. 株式会社Tal Solutions &middot; <a href="#disclaimer">Disclaimer</a> &middot; <a href="../../index.html#privacy">Privacy Policy</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+/* HOME LINK: put your homepage address between the quotes, e.g. "/" or "https://yourdomain.com/". While empty, the logo and Home button do nothing. */
+var HOME_URL="../../index.html";
+document.querySelectorAll('a[data-home]').forEach(function(a){if(HOME_URL)a.setAttribute('href',HOME_URL)});
+var $=function(id){return document.getElementById(id)};
+var v=function(id){return ($(id).value||'').trim()};
+var radio=function(n){var e=document.querySelector('input[name="'+n+'"]:checked');return e?e.value:''};
+var lines=function(s){return s.split(/\n+/).map(function(x){return x.replace(/^[\s\-•*]+/,'').trim()}).filter(Boolean)};
+var bullets=function(s){return lines(s).map(function(x){return '  - '+x}).join('\n')};
+
+var EXAMPLE={
+  text:{title:'Customer Success Manager, Enterprise',oneLine:'Owns onboarding and long-term health of our largest accounts so they renew and expand.',reportsTo:'Head of Customer Success',
+    demand:'We signed three enterprise clients this quarter and each needs a named point of contact in the Asia-Pacific timezone.',
+    justify:'Current CSMs are at roughly 140% of target account load and response times have slipped. Tooling cannot replace relationship ownership at this contract size.',
+    o90:'Fully onboarded on the product. Running onboarding for the three new enterprise accounts with each live in production.',
+    o180:'Owns a book of 10 accounts with a health score and renewal plan for each. First quarterly business reviews delivered.',
+    o365:'Net revenue retention above 110% on the book. Has documented an enterprise onboarding playbook the team now uses.',
+    duties:'Run onboarding and training for new enterprise customers\nHold quarterly business reviews with customer executives\nSpot churn risk early and coordinate the response with product and support\nIdentify expansion opportunities with sales',
+    must:'Experience managing customer relationships in a B2B software or services setting\nClear written and spoken communication with senior customers\nComfortable working in English every day',
+    mustWhy:'Customers are business buyers who expect a confident point of contact from week one. Daily English is needed because documentation and the team work in it.',
+    years:'2',pref:'Experience with SaaS renewals and expansion\nFamiliarity with a CRM such as Salesforce or HubSpot\nBasic SQL or spreadsheet analysis',
+    prefUse:'Renewal experience speeds up forecasting. CRM familiarity shortens setup. SQL helps with health reporting.',
+    prefWhy:'All three can be learned in the first two months. We provide CRM training, a buddy on the team, and a learning budget.',
+    loc:'Tokyo, Japan',days:'3 days a week in the office',travel:'',travelNote:'Occasional customer visits within Japan',
+    langReq:'English (fluent), Japanese (business level)',langPref:'Mandarin',visa:'Visa sponsorship available for the right candidate',
+    cur:'JPY',salMin:'7,000,000',salMax:'9,500,000',perks:'Annual performance bonus\nStock options\nFull health insurance\nLearning budget of 200,000 yen per year\nFlexible hours',
+    company:'Example Co',dept:'Customer Success',site:'',teamMake:'Six people today: a lead, three CSMs and two support specialists. Mixed tenure from 1 to 6 years, and they sit next to the sales team.',
+    env:'Direct feedback, weekly demos, little hierarchy. People are trusted to own outcomes and decide how to get there.',
+    sell:'Own the Japan enterprise book with real decision authority\nClear path to team lead within 18 months\nWork closely with product, and your feedback ships\nSmall team where your work is visible'},
+  sel:{level:'Mid level',empType:'Full-time, permanent',travel:'Occasional (up to 10%)',degree:'Degree or equivalent practical experience',per:'year',showPay:'yes'},
+  radio:{titleMode:'set',reason:'Expansion (growing the team)',mode:'Hybrid',tone:'formal'},
+  research:true
+};
+function fill(d){
+  Object.keys(d.text).forEach(function(k){$(k).value=d.text[k]});
+  Object.keys(d.sel).forEach(function(k){$(k).value=d.sel[k]});
+  Object.keys(d.radio).forEach(function(n){document.querySelectorAll('input[name="'+n+'"]').forEach(function(r){r.checked=(r.value===d.radio[n])})});
+  $('research').checked=d.research;
+}
+function clearAll(){
+  document.querySelectorAll('#form input[type=text],#form input[type=number],#form textarea').forEach(function(e){e.value=''});
+  document.querySelectorAll('#form select').forEach(function(s){s.selectedIndex=0});
+  ['reason','mode'].forEach(function(n){document.querySelectorAll('input[name="'+n+'"]').forEach(function(r){r.checked=false})});
+  document.getElementById('tm1').checked=true;document.getElementById('t1').checked=true;$('research').checked=true;
+  $('exampleBar').hidden=true;update();
+}
+
+var SECS={
+  role:function(){return v('title')||v('oneLine')||v('level')},
+  why:function(){return radio('reason')||v('demand')||v('justify')},
+  outcomes:function(){return v('o90')||v('o180')||v('o365')},
+  must:function(){return v('must')},
+  where:function(){return radio('mode')||v('loc')||v('langReq')},
+  pay:function(){return v('salMin')||v('salMax')},
+  co:function(){return v('company')&&(v('teamMake')||v('sell')||v('env'))},
+  tone:function(){return true}
+};
+
+function build(){
+  var tone=radio('tone');var P=[];
+  var toneTxt=tone==='friendly'
+   ?'Laid-back and friendly, with a start-up feel. Warm, direct and human. Use "you" and "we", short sentences and plain words. Light humour is fine. No corporate jargon or buzzwords. It must still be accurate and trustworthy.'
+   :'Formal and professional. Polished, precise and measured. Confident without hype. No slang, no exclamation marks, no filler phrases.';
+  P.push('You are an expert recruiter and hiring consultant. Write a complete, publication-ready job description from the brief below, then add a short hiring-plan review.\n');
+  P.push('=== TONE AND LANGUAGE ===\n'+toneTxt+'\nWrite the job description in: '+$('outLang').value+'. Keep the same structure and tone in every language.\n');
+
+  var r='=== ROLE ===\n';
+  if(radio('titleMode')==='advise'||!v('title')){
+    r+='- Job title: not set. Propose 3 title options, ranked, and use the best one as the title. Each should be what candidates actually search for, match the level, and avoid inflated or internal-only wording. Give one line of reasoning per option.\n';
+  } else r+='- Job title: '+v('title')+' (keep as given; if it looks unusual for the market, say so in the review)\n';
+  if(v('oneLine'))r+='- Purpose of the role: '+v('oneLine')+'\n';
+  if(v('level'))r+='- Level: '+v('level')+'\n';
+  if(v('empType'))r+='- Employment type: '+v('empType')+'\n';
+  if(v('dept'))r+='- Department / team: '+v('dept')+'\n';
+  if(v('reportsTo'))r+='- Reports to: '+v('reportsTo')+'\n';
+  P.push(r);
+
+  var w='';
+  if(radio('reason'))w+='- Type of opening: '+radio('reason')+'\n';
+  if(v('demand'))w+='- Trigger / demand: '+v('demand')+'\n';
+  if(v('justify'))w+='- Case for the headcount: '+v('justify')+'\n';
+  if(w)P.push('=== WHY THE ROLE EXISTS ===\n'+w);
+
+  var o='';
+  if(v('o90'))o+='- First 3 months: '+v('o90')+'\n';
+  if(v('o180'))o+='- By 6 months: '+v('o180')+'\n';
+  if(v('o365'))o+='- By 12 months: '+v('o365')+'\n';
+  if(v('duties'))o+='- Core responsibilities:\n'+bullets(v('duties'))+'\n';
+  if(o)P.push('=== EXPECTED OUTCOMES AND RESPONSIBILITIES ===\n'+o);
+
+  var q='';
+  if(v('must'))q+='- Minimum requirements (the only hard requirements; do not add to this list):\n'+bullets(v('must'))+'\n';
+  if(v('mustWhy'))q+='- Why these are required: '+v('mustWhy')+'\n';
+  if(v('years'))q+='- Minimum years of experience: '+v('years')+'\n';
+  if(v('degree'))q+='- Education: '+v('degree')+'\n';
+  if(v('pref'))q+='- Preferred qualifications (nice to have, not required):\n'+bullets(v('pref'))+'\n';
+  if(v('prefUse'))q+='- How the preferred items help: '+v('prefUse')+'\n';
+  if(v('prefWhy'))q+='- Why they are not required: '+v('prefWhy')+'\n';
+  if(q)P.push('=== QUALIFICATIONS ===\n'+q);
+
+  var l='';
+  if(radio('mode'))l+='- Working arrangement: '+radio('mode')+'\n';
+  if(v('loc'))l+='- Location / eligible regions: '+v('loc')+'\n';
+  if(v('days'))l+='- Office days or timezone overlap: '+v('days')+'\n';
+  if(v('travel')||v('travelNote'))l+='- Travel: '+[v('travel'),v('travelNote')].filter(Boolean).join(' - ')+'\n';
+  if(v('langReq'))l+='- Languages required: '+v('langReq')+'\n';
+  if(v('langPref'))l+='- Languages that are a plus: '+v('langPref')+'\n';
+  if(v('visa'))l+='- Work authorization / relocation: '+v('visa')+'\n';
+  if(l)P.push('=== LOCATION, LANGUAGE AND TRAVEL ===\n'+l);
+
+  var c='';
+  var cur=v('cur');
+  if(v('salMin')||v('salMax')){
+    c+='- Budget range: '+[cur,v('salMin')].filter(Boolean).join(' ')+(v('salMax')?' to '+v('salMax'):'')+' per '+$('per').value+'\n';
+    c+='- Publish pay in the JD: '+($('showPay').value==='yes'?'Yes':'No. Keep the budget out of the JD but use it for the market-realism review.')+'\n';
+  }
+  if(v('perks'))c+='- Bonus, equity and benefits:\n'+bullets(v('perks'))+'\n';
+  if(c)P.push('=== COMPENSATION ===\n'+c);
+
+  var k='';
+  if(v('company'))k+='- Company: '+v('company')+'\n';
+  if(v('site'))k+='- Website: '+v('site')+'\n';
+  if($('research').checked&&(v('company')||v('dept')))k+='- Research: Look up the company'+(v('dept')?' and the "'+v('dept')+'" team':'')+' from public sources (website, press, careers page, reputable listings). Use what you find for the company overview and mission. Mark any detail you could not verify with [VERIFY]. Never invent facts, numbers, funding, awards or customers. If you have no web access, say so, write only from what I provide, and mark gaps with [FILL IN].\n';
+  if(v('teamMake'))k+='- Team make-up: '+v('teamMake')+'\n';
+  if(v('env'))k+='- Environment and culture: '+v('env')+'\n';
+  if(v('sell'))k+='- Selling points from the hiring manager:\n'+bullets(v('sell'))+'\n';
+  if(k)P.push('=== COMPANY, TEAM AND ENVIRONMENT ===\n'+k);
+
+  if(v('template'))P.push('=== REQUIRED COMPANY TEMPLATE / HOUSE RULES ===\nFollow this instead of the default structure below, keeping every mandatory line unchanged:\n'+v('template')+'\n');
+
+  var s='=== OUTPUT INSTRUCTIONS ===\n';
+  s+='PART 1: THE JOB DESCRIPTION\n';
+  s+=(v('template')?'Follow the company template above. Where it is silent, use this structure:\n':'Use exactly this structure and heading order so every JD is consistent:\n');
+  s+='  1. Job title\n  2. Snapshot (a short table or list: team, level, employment type, location and arrangement, travel, languages'+($('showPay').value==='yes'&&(v('salMin')||v('salMax'))?', pay range':'')+')\n  3. About [company] (2-3 sentences)\n  4. About the team (who they will work with and what the environment is like)\n  5. Why this role exists (the real reason it was opened, in candidate-friendly terms)\n  6. What you will do (5-8 outcome-focused bullets)\n  7. What success looks like (3 months / 6 months / 12 months)\n  8. What you need (minimum requirements only; add one short note on why each matters if given)\n  9. Nice to have (preferred qualifications, with a sentence saying these can be learned on the job and that candidates without them should still apply)\n  10. Where and how you will work (location, arrangement, travel, languages)\n  11. Compensation and benefits\n  12. Why join us (specific selling points)\n  13. How to apply, plus an equal-opportunity statement\n';
+  s+='Writing rules:\n  - Use only the facts I gave you. Where something is missing but needed, write a sensible placeholder in [SQUARE BRACKETS] instead of inventing it.\n  - Keep the minimum requirements list short and honest. Do not add requirements I did not list.\n  - Use inclusive, gender-neutral language and avoid terms like "rockstar", "ninja", "young" or "native speaker" (say "fluent" or give a level).\n  - Describe outcomes and impact, not just duties. Keep it scannable, under about 700 words, with no filler.\n  - Match the tone specified above throughout.\n\n';
+  s+='PART 2: HIRING PLAN NOTES (separate from the JD, 6-10 short bullets)\n  - Market realism: is this profile, level and budget realistic and available in the market'+(v('loc')?' in '+v('loc'):'')+'? Say plainly if any combination looks hard to fill.\n  - Requirements check: flag any minimum requirement that seems too high, too many, or better moved to preferred.\n  - Pool size: how to widen the candidate pool without lowering the bar.\n  - Gaps: list the important details I left out that would improve this JD or the plan.\n  - Interview focus: the 4-5 things to assess to confirm someone will hit the 3, 6 and 12 month outcomes.\n  - Suggested places to find these candidates.\n';
+  P.push(s);
+  return P.join('\n');
+}
+
+function checks(){
+  var out=[];var add=function(ok,t){out.push({ok:ok,t:t})};
+  var must=lines(v('must'));
+  if(must.length>6)add(false,'You list '+must.length+' minimum requirements. Long lists shrink and homogenise the pool. Keep only what cannot be learned, and move the rest to preferred.');
+  else if(must.length)add(true,'Minimum list is a manageable '+must.length+' items.');
+  if(must.length&&!v('mustWhy'))add(false,'Say why each minimum requirement is required. If you cannot, it probably is not.');
+  if(v('pref')&&!v('prefWhy'))add(false,'Explain why the preferred items are not required (learnable on the job, mentor, training). It encourages strong candidates to apply.');
+  var y=parseInt(v('years'),10);var lv=v('level');
+  if(y>=5&&(lv==='Entry level'||lv==='Intern / Trainee'||lv==='Mid level'))add(false,y+' years of experience is high for a "'+lv+'" role. Check the level, the budget and the years agree.');
+  if(v('degree')==='Degree required')add(false,'A mandatory degree removes many capable people. Consider "or equivalent experience" if the work does not legally need it.');
+  if(!v('salMin')&&!v('salMax'))add(false,'No budget given, so the market-realism check will be a guess. Even a rough range helps.');
+  else if(v('salMin')||v('salMax'))add(true,'Budget provided, so the AI can check realism.');
+  if(!radio('mode'))add(false,'Decide on-site, hybrid or remote. It changes the candidate pool more than almost anything else.');
+  if(!v('o90')&&!v('o180')&&!v('o365'))add(false,'Add what the hire should achieve at 3, 6 and 12 months. This is the best test of whether you know what you need.');
+  if(!v('justify')&&!v('demand'))add(false,'Write down why this headcount is needed. You will be asked for it, and it sharpens the JD.');
+  if(!v('sell'))add(false,'Add real reasons someone would choose this role. Generic perks do not persuade.');
+  if(!v('title')&&radio('titleMode')==='set')add(false,'No title entered. Switch to "suggest titles" or type one.');
+  var done=out.filter(function(o){return o.ok});var bad=out.filter(function(o){return !o.ok});
+  return bad.concat(done);
+}
+
+function update(){
+  var n=0;
+  document.querySelectorAll('details.sec').forEach(function(d){
+    var ok=!!SECS[d.dataset.sec]();
+    if(d.dataset.sec==='tone')ok=true;
+    d.classList.toggle('done',ok);
+    var nm=d.querySelector('.num');var idx=d.querySelector('.num').dataset.i||nm.textContent;nm.dataset.i=idx;
+    nm.textContent=ok?'✓':idx;if(ok)n++;
+  });
+  $('prog').textContent=n+' of 8';
+  var cl=checks();var ul=$('checks');ul.innerHTML='';
+  if(!cl.length){var li=document.createElement('li');li.className='good';li.innerHTML='<i>✓</i><span>Start filling in sections and prompts will appear here.</span>';ul.appendChild(li)}
+  cl.forEach(function(c){var li=document.createElement('li');if(c.ok)li.className='good';
+    var i=document.createElement('i');i.textContent=c.ok?'✓':'!';var s=document.createElement('span');s.textContent=c.t;li.appendChild(i);li.appendChild(s);ul.appendChild(li)});
+  $('prompt').value=build();
+}
+
+function copy(){
+  var ta=$('prompt');var st=$('status');
+  var done=function(){st.textContent='Copied. Paste it into your AI assistant.';setTimeout(function(){st.textContent=''},3500)};
+  var fb=function(){ta.focus();ta.select();try{document.execCommand('copy');done()}catch(e){st.textContent='Press Ctrl/Cmd+C to copy the selected text.'}};
+  try{navigator.clipboard.writeText(ta.value).then(done,fb)}catch(e){fb()}
+}
+
+$('form').addEventListener('input',update);
+$('form').addEventListener('change',update);
+$('copy').addEventListener('click',copy);
+$('copyTop').addEventListener('click',copy);
+$('clearAll').addEventListener('click',clearAll);
+document.querySelectorAll('details.sec .num').forEach(function(n){n.dataset.i=n.textContent});
+fill(EXAMPLE);update();
+})();
+</script>
+
+</body>
+</html>
